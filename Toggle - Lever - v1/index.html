@@ -5,16 +5,17 @@
         <title>Toggle - Lever - v1</title>
         <style>
             body {
-                display: block;
+                display: inline-block;
                 margin: 0;
                 padding: 3px 5px;
                 background-color: rgb(242, 242, 247);
+                white-space: nowrap;
             }
             .container {
-                position: absolute;
+                /** position: absolute;
                 left: 50%;
                 top: 50%;
-                transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%); **/
                 padding 5px
             }
             .cb-toggle-lever {
@@ -24,14 +25,17 @@
                 
                 position: relative;
                 border: 3px solid rgb(90, 90, 95);
-                width: 8em;
+                width: 7em;
                 height: 3em;
-                display: inline-block;
+                display: block;
                 margin: 0;
                 padding: 0;
-                outline: none;
                 overflow: hidden;
-                border-radius:  24px 24px 0 0;
+                box-sizing: border-box;
+                
+                /** border-radius:  30px 30px 0 0; **/
+                
+                float: left; /** rm **/
             }
             .cb-toggle-lever input {
                 visibility: hidden;
@@ -44,7 +48,7 @@
                 border: none;
                 height: 100%;
                 padding: 0;
-                transition: 150ms ease-in-out;
+                transition: 150ms linear;
             }
             .cb-toggle-lever > span > span {
                 position: absolute;
@@ -54,6 +58,8 @@
                 color: rgb(58, 58, 60);
                 font-weight: 600;
                 font-size: 17px;
+                font-family: "Helvetica";
+                letter-spacing: 2px;
             }
             
             .cb-toggle-lever > span[for="divider"] {
@@ -62,9 +68,6 @@
                 left: 50%;
                 top: 50%;
                 transform: translate(-50%, -50%);
-                padding: 0;
-                margin: 0;
-                outline: none;
             }
             .cb-toggle-lever > span[for="on"] {
                 right: 0;
@@ -78,28 +81,28 @@
             }
             
             .cb-toggle-lever > span[for="stick"] {
-                height: 198%;
+                height: 120%;
                 width: 0.3em;
-                background-color: rgb(99, 99, 102);
+                background-color: rgb(109, 109, 112);
                 left: 50%;
                 top: 50%;
-                transform: translate(-50%, -10%) rotate(-45deg); /** Default **/
+                transform: translate(-50%, -10%) rotate(-59deg); /** Default **/
                 border-radius: 9px;
             }
             .cb-toggle-lever > span[for="circle"] {
                 background-color: rgb(98, 98, 102);
                 border-radius: 50%;
-                width: 60px;
-                height: 60px;
+                width: 30px;
+                height: 30px;
                 left: 50%;
                 top: 50%;
-                transform: translate(-50%, 10%);
-                box-shadow: 0 -3px 5px rgba(102, 102, 109, 0.5);
+                transform: translate(-50%, 40%);
+                box-shadow: 0 -3px 5px rgba(102, 102, 109, 0.3);
             }
             
             /** Events **/
             .cb-toggle-lever > input:checked ~ span[for="stick"] {
-                transform: translate(-50%, -10%) rotate(45deg);
+                transform: translate(-50%, -10%) rotate(59deg);
             }
             .cb-toggle-lever > input:checked ~ span[for="off"] {
                 box-shadow: 0 0 var(--shadow-depth) inset var(--shadow-off);
@@ -112,6 +115,1649 @@
     </head>
     <body>
         <div class="container">
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+            
             <label class="cb-toggle-lever">
                 <input type="checkbox">
                 <span for="off">
