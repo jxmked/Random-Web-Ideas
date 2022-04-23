@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <title>Toggle - Lever - v1</title>
+        <style>
+            body {
+                display: block;
+                margin: 0;
+                padding: 3px 5px;
+                background-color: rgb(242, 242, 247);
+            }
+            .container {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                padding 5px
+            }
+            .cb-toggle-lever {
+                --shadow-on: rgb(215, 214, 10);
+                --shadow-off: rgb(125, 125, 127);
+                --shadow-depth: 20px;
+                
+                position: relative;
+                border: 3px solid rgb(90, 90, 95);
+                width: 8em;
+                height: 3em;
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+                outline: none;
+                overflow: hidden;
+                border-radius:  24px 24px 0 0;
+            }
+            .cb-toggle-lever input {
+                visibility: hidden;
+                position: absolute;
+            }
+            .cb-toggle-lever > span {
+                position: absolute;
+                margin: 0;
+                width: 50%;
+                border: none;
+                height: 100%;
+                padding: 0;
+                transition: 150ms ease-in-out;
+            }
+            .cb-toggle-lever > span > span {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: rgb(58, 58, 60);
+                font-weight: 600;
+                font-size: 17px;
+            }
+            
+            .cb-toggle-lever > span[for="divider"] {
+                width: 0.2em;
+                background-color: rgb(90, 90, 95);
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                padding: 0;
+                margin: 0;
+                outline: none;
+            }
+            .cb-toggle-lever > span[for="on"] {
+                right: 0;
+                background-color: rgb(48, 219, 91);
+                box-shadow: 0 0 var(--shadow-depth) inset var(--shadow-off);/** Default **/
+            }
+            .cb-toggle-lever > span[for="off"] {
+                left: 0;
+                background-color: rgb(255, 105, 97);
+                box-shadow: 0 0 var(--shadow-depth) inset var(--shadow-on);/** Default **/
+            }
+            
+            .cb-toggle-lever > span[for="stick"] {
+                height: 198%;
+                width: 0.3em;
+                background-color: rgb(99, 99, 102);
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -10%) rotate(-45deg); /** Default **/
+                border-radius: 9px;
+            }
+            .cb-toggle-lever > span[for="circle"] {
+                background-color: rgb(98, 98, 102);
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, 10%);
+                box-shadow: 0 -3px 5px rgba(102, 102, 109, 0.5);
+            }
+            
+            /** Events **/
+            .cb-toggle-lever > input:checked ~ span[for="stick"] {
+                transform: translate(-50%, -10%) rotate(45deg);
+            }
+            .cb-toggle-lever > input:checked ~ span[for="off"] {
+                box-shadow: 0 0 var(--shadow-depth) inset var(--shadow-off);
+            }
+            .cb-toggle-lever > input:checked ~ span[for="on"] {
+                box-shadow: 0 0 var(--shadow-depth) inset var(--shadow-on);
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <label class="cb-toggle-lever">
+                <input type="checkbox">
+                <span for="off">
+                    <span>OFF</span>
+                </span>
+                <span for="divider"></span>
+                <span for="on">
+                    <span>ON</span>
+                </span>
+                <span for="stick"></span>
+                <span for="circle"></span>
+            </label>
+        </div>
+    </body>
+</html>
