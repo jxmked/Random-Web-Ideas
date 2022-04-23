@@ -1,0 +1,23 @@
+
+:root {
+    --main-bg: rgb(242, 242, 247);
+    --main-outline: rgb(72, 72, 74);
+}
+
+body {
+    margin: 0 auto;
+    display: block;
+    white-space: nowrap;
+    background-color: var(--main-bg);
+    width: 100%;
+    max-width: 559px !important;
+    box-sizing: border-box;
+    padding: 3px 5px;
+}
+@media (min-width:560px){
+    body {
+        border: 0 1px 0 1px;
+        border-style: solid;
+        border-color: var(--main-outline);
+    }
+}
