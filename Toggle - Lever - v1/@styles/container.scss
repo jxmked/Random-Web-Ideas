@@ -1,0 +1,22 @@
+> .container {
+    border: 1px solid rgb(142, 142, 147);
+    padding: 20px;
+    border-radius: 15px;
+    background: inherit;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    
+    > .panel {
+        margin-bottom: 5px;
+        text-align: center;
+        
+        &:not(:last-child) {
+            padding-bottom: 7px;
+            border-bottom: 1px solid;
+            border-color: var(--border-color);
+        }
+    }
+}
