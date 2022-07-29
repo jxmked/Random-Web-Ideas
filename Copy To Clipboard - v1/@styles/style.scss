@@ -1,0 +1,86 @@
+.panel {
+    
+    margin: auto;
+    
+    > div {
+        // Border Radius Bent
+        $brv: 10px;
+        
+        height: 300px;
+        width: 300px;
+        aspect-ratio: 1 / 1;
+        margin: auto;
+        
+        > textarea {
+            width: 88%;
+            height: 80%;
+            margin: auto;
+            display: block;
+            outline: none;
+            padding: 2% 1% 0 2%;
+            line-height: 1rem;
+            font-family: "Helvetica", "Arial", "Sans-Serif";
+            border-bottom: none;
+            resize: none;
+            white-space: initial;
+            border-radius: $brv $brv 0 0;
+            border-color: $border-color;
+            
+        }
+        
+        > button {
+            &:before, &:after {
+                display: none;
+            }
+            
+            display: block;
+            width: 92%;
+            height: 10%;
+            margin: auto;
+            padding: 0;
+            outline: none;
+            overflow: hidden;
+            border: 1px solid #000;
+            border-radius: 0 0 $brv $brv;
+            border-color: $border-color;
+            
+            > span {
+                border: none;
+                outline: none;
+                margin: 0;
+                display: block;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 3px;
+                width: 100%;
+                height: auto;
+                padding: 3% 0 3% 0;
+                text-align: center;
+                vertical-align: middle;
+                transition: 150ms;
+                
+                &[for="copy"] {
+                    
+                }
+                &[for="copied"] {
+                    background-color: rgb(60, 225, 85);
+                }
+                &[for="failed"] {
+                    background-color: rgb(255, 79, 68);
+                    color: rgb(255, 224, 20);
+                }
+            }
+            
+            // Events
+            &:not([data-state="copy"]) > span[for="copy"] {
+                transform: translateY(-100%);
+            }
+            &[data-state="failed"] > span[for="failed"] {
+                transform: translateY(-200%);
+            }
+            &[data-state="copied"] > span[for="copied"] {
+                transform: translateY(-100%);
+            }
+        }
+    }
+}

@@ -1,0 +1,122 @@
+$border-color: rgb(54, 54, 56);
+$max-width: 650px;
+
+body {
+    width: 100%;
+    max-width: $max-width;
+    height: auto;
+    font-size: 10px;
+    display: block;
+    white-space: nowrap;
+    font-family: "Helvetica", "Arial", "Sans-Serif";
+    background-color: rgb(242, 242, 247);
+    color: rgb(68, 68, 70);
+    margin: 0 auto;
+    
+    > .header {
+        width: 70%;
+        max-width: $max-width;
+        background-color: rgb(229, 229, 234);
+        margin: 1.2rem auto 0 auto;
+        border: 1px solid;
+        border-color: $border-color;
+        border-radius: 7px;
+        text-align: center;
+        
+        h3 {
+            display: inline-block;
+        }
+    }
+}
+
+%center-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+button, button:before, button:after,
+input, input:before, input:after {
+    background-color: rgb(242, 242, 247);
+    color: rgb(68, 68, 70);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+    
+    
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+@import "container.scss";
+@import "style.scss";
+
+footer {
+    max-width: $max-width;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    border-top: 1px solid;
+    border-color: $border-color;
+    font-size: 1.2rem;
+    
+    // Fixes Outside Element
+    margin: 0 0 30px 0;
+    
+    > div {
+        padding: 0;
+        margin: 1px;
+        
+        &:first-child {
+            text-align: center;
+            margin: 10px 0 7px 0;
+            font-weight: 500;
+            display: block;
+        }
+        
+        h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            padding: 0;
+            margin: 10px 0 5px 15px;
+        }
+    }
+    
+    label[for="copyright"] {
+        position: absolute;
+        right: 25px;
+    }
+    
+    label[for="developer"],
+    label[for="socials"],
+    label[for="socials"] > span,
+    > div > label {
+        margin: 0 0 0 20px;
+    }
+    
+    label[for="socials"],
+    label[for="socials"] > span {
+        display: block;
+    }
+    
+    a {
+        color: inherit;
+        text-decoration-line: underline;
+    }
+}
+
+@media (min-width: 450px) {
+    footer > div,
+    footer > div > label {
+        display: inline-block;
+    }
+}
