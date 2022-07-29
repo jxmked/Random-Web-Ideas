@@ -27,7 +27,15 @@ class CopyToClipboard {
             "exec" : this.copyExec
         };
         
+        let ival : ReturnType<typeof window.setTimeout>;
+        let flag : boolean = false;
+        
         element.addEventListener("click", (e) => {
+            if(flag) return;
+            
+            ival = window.setTimeout(() => flag = false, 1000)
+            flag = true;
+            
             try {
                 let str:string = this.clickCallback(element);
                 str = this.__sanitizeString(str);

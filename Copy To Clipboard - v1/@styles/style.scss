@@ -11,6 +11,12 @@
         aspect-ratio: 1 / 1;
         margin: auto;
         
+        > textarea::selection {
+            color: rgb(36, 36, 38);
+            background-color: rgb(255, 204, 0);
+            text-shadow: none;
+        }
+        
         > textarea {
             width: 88%;
             height: 80%;
@@ -25,7 +31,8 @@
             white-space: initial;
             border-radius: $brv $brv 0 0;
             border-color: $border-color;
-            
+            color: $text-color;
+            background-color: inherit;
         }
         
         > button {
