@@ -25,19 +25,17 @@ function HoldButton(element : HTMLElement) : {[id:string]:Function} {
     // Accessible to all Callback Functions.
     const userdata : {[id:string]:any} = {};
     
-    const start : any = (e : Event) => {
-        has["onhold"] = true;
-        
+    const start : EventListenerOrEventListenerObject = (e : Event) => {
         if(e.cancelable){
             e.preventDefault();
         }
         
-        ival = setTimeout(() => {
+        ival = window.setTimeout(() => {
             callbacks["hold"](userdata);
         }, rpTime);
     }
     
-    const end : any = (e : Event) => {
+    const end : EventListenerOrEventListenerObject = (e : Event) => {
         if(e.cancelable){
             e.preventDefault();
         }
@@ -53,17 +51,11 @@ function HoldButton(element : HTMLElement) : {[id:string]:Function} {
         } catch(TypeError){}
         
         /** Stop or Prevent Timeout to initiate **/
-         clearTimeout(ival);
-         
-        has["onhold"] = false;
+        clearTimeout(ival);
     }
     
     return {
         "onClick" : (callback : Function) => {
-            if(! (callback && {}.toString.call(callback) === '[object Function]')){
-                throw new Error("HoldButton.onClick requires a function");
-            }
-            
             userdata["click"] = callback;
             userdata["func"] = callback;
             userdata["function"] = callback;
@@ -75,8 +67,9 @@ function HoldButton(element : HTMLElement) : {[id:string]:Function} {
             if(has["onhold"]) {
                 throw new Error("HoldButton.onHold can be call only once.");
             }
+            has["onhold"] = true;
             
-            callbacks["hold"] = callback;
+            callbacks["hold"] = callback
             
             if('ontouchstart' in element && 'ontouchend' in element) {
                 // For Mobile Devices
@@ -88,6 +81,9 @@ function HoldButton(element : HTMLElement) : {[id:string]:Function} {
                 /**
                  * My best way of solving...mouseup did not fire if
                  * the cursor is out of element.
+                 * 
+                 * Side Effect: If mouse leave the element
+                 *      while onclick it also stop
                  * */
                 element.addEventListener('mouseleave', end, false);
                 element.addEventListener('mouseup', end, false);

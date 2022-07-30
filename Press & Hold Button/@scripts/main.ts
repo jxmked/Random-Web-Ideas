@@ -19,7 +19,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const input : HTMLInputElement = document.querySelector("#num")!;
     
     // Init - Increase
-    const i_btn = HoldButton(document.querySelector("#i_num")!);
+    const i_btn : {[id:string]:Function} = HoldButton(document.querySelector("#i_num")!);
+    
     
     // Main function
     i_btn.onClick(() => {
@@ -34,7 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
     
     
     // Init - Decrease
-    const d_btn = HoldButton(document.querySelector("#d_num")!);
+    const d_btn : {[id:string]:Function} = HoldButton(document.querySelector("#d_num")!);
     
     // our main function to call
     d_btn.onClick(() => {
