@@ -1,0 +1,218 @@
+body {
+  width: 100%;
+  max-width: 650px;
+  height: auto;
+  font-size: 10px;
+  display: block;
+  white-space: nowrap;
+  font-family: "Helvetica", "Arial", "Sans-Serif";
+  background-color: #f2f2f7;
+  margin: 0 auto;
+}
+body > .header {
+  width: 70%;
+  max-width: 650px;
+  background-color: #e5e5ea;
+  margin: 1.2rem auto 0 auto;
+  border: 1px solid;
+  border-color: #363638;
+  border-radius: 7px;
+  text-align: center;
+}
+body > .header h3 {
+  display: inline-block;
+  color: #2c2c24;
+}
+
+.container, .panel:last-child #hold_modal, .panel:last-child #hold_modal > div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+button, button:before, button:after,
+input, input:before, input:after {
+  background-color: #f2f2f7;
+  color: #444446;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.container {
+  border: 1px solid #8e8e93;
+  padding: 20px;
+  border-radius: 15px;
+  background: inherit;
+  z-index: 9;
+  max-width: 650px;
+}
+.container > .panel {
+  margin-bottom: 5px;
+  text-align: center;
+}
+.container > .panel:not(:last-child) {
+  padding-bottom: 7px;
+  border-bottom: 1px solid;
+  border-color: #363638;
+}
+.container > .panel > h1, .container > .panel > h2, .container > .panel > h3,
+.container > .panel > h4, .container > .panel > h5, .container > .panel > h6 {
+  display: block;
+  font-size: initial;
+}
+
+.panel {
+  white-space: nowrap;
+  font-size: 0;
+}
+.panel input,
+.panel button {
+  text-align: center !important;
+  font-size: 1.2rem !important;
+}
+.panel:first-child > h3 {
+  font-size: 12px !important;
+}
+.panel:first-child .items #num {
+  width: 40px;
+  border: none;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #363638;
+}
+.panel:first-child .items button {
+  border: 1px solid;
+  border-color: #363638;
+}
+.panel:first-child .items button:first-child {
+  border-radius: 7px 0 0 7px;
+}
+.panel:first-child .items button:last-child {
+  border-radius: 0 7px 7px 0;
+}
+.panel:first-child .items button:before, .panel:first-child .items button:after {
+  content: '';
+}
+.panel:first-child .items button:hover {
+  background-color: #e5e5d6;
+}
+.panel:first-child .items button:active {
+  background-color: #aeaeb2;
+  border: 1px solid #636366;
+}
+.panel:last-child > h3 {
+  font-size: 15px !important;
+}
+.panel:last-child .hidden {
+  display: none;
+  visibility: hidden;
+}
+.panel:last-child button {
+  border-radius: 7px;
+  border: 1px solid;
+  border-color: #363638;
+}
+.panel:last-child button:before, .panel:last-child button:after {
+  content: '';
+}
+.panel:last-child button:hover {
+  background-color: #e5e5d6;
+}
+.panel:last-child button:active {
+  background-color: #aeaeb2;
+  border: 1px solid #636366;
+}
+.panel:last-child #hold_button {
+  padding: 3px 5px;
+}
+.panel:last-child #hold_modal {
+  height: 20rem;
+  width: 20rem;
+  background-color: rgba(174, 174, 178, 0.3);
+  overflow: break;
+  backdrop-filter: blur(5px);
+}
+.panel:last-child #hold_modal > #hold_modal_close {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.panel:last-child #hold_modal > div {
+  font-size: 1.4rem;
+}
+.panel:last-child #hold_modal > div > span {
+  white-space: initial;
+  height: auto;
+  width: 15rem;
+  display: inline-block;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+footer {
+  max-width: 650px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  border-top: 1px solid;
+  border-color: #363638;
+  font-size: 1.2rem;
+  margin: 0 0 30px 0;
+}
+footer > div {
+  padding: 0;
+  margin: 1px;
+}
+footer > div:first-child {
+  text-align: center;
+  margin: 10px 0 7px 0;
+  font-weight: 500;
+  display: block;
+  color: #2c2c24;
+}
+footer > div h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  padding: 0;
+  margin: 10px 0 5px 15px;
+  color: #2c2c24;
+}
+footer label[for="copyright"] {
+  position: absolute;
+  right: 25px;
+  color: #2c2c24;
+}
+footer label[for="developer"],
+footer label[for="socials"],
+footer label[for="socials"] > span,
+footer > div > label {
+  margin: 0 0 0 20px;
+  color: #2c2c24;
+}
+footer label[for="socials"],
+footer label[for="socials"] > span {
+  display: block;
+}
+footer a {
+  color: inherit;
+  text-decoration-line: underline;
+}
+
+@media (min-width: 450px) {
+  footer > div,
+  footer > div > label {
+    display: inline-block;
+  }
+}
