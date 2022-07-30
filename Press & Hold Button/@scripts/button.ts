@@ -16,8 +16,8 @@ class HoldButton {
     /**
      * Private Properties
      * */
-    readonly __has:{[id:string]:boolean};
-    readonly __callbacks:{[id:string]:Function};
+    __has:{[id:string]:boolean};
+    __callbacks:{[id:string]:Function};
     __setTimeout:number;
     __responseTime:number;
     __userdata:{[id:string]:any};
