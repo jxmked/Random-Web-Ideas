@@ -2,108 +2,146 @@
  * Project name: Project Name: Press and Hold For Web Buttons
  * */
 
-function HoldButton(element : HTMLElement) : {[id:string]:Function} {
+/**
+ * in 'onHold' and 'onUnHold' method, we pass an object
+ * variable where we can access the declared function
+ * from 'onClick'. We can also use that object as variable
+ * that related to that object
+ * 
+ * 'main' => declared function fron 'onclick'
+ * 
+ * */
+
+class HoldButton {
     /**
-     * Click and Hold or Tap and hold a button to initiate extra feature.
+     * Private Properties
+     * */
+    readonly __has:{[id:string]:boolean};
+    readonly __callbacks:{[id:string]:Function};
+    __setTimeout:number;
+    __responseTime:number;
+    __userdata:{[id:string]:any};
+    __element:HTMLElement;
+    
+    /**
+     * Require DOM element
      * */
      
-    const has : {[id:string]:boolean} = {
-        "onhold" : false,
-        "onunhold" : false
-    };
-    
-    const callbacks : {[id:string]:Function} = {
-        "hold" : function(){},
-        "unhold" : function(){},
-        "main" : function(){}
-    };
-    
-    let ival : number; // Store setTimeout event data
-    let rpTime : number; // Initiate extra feature after a given time in millisecond
-    
-    // Save some data that are related to this function.
-    // Accessible to all Callback Functions.
-    const userdata : {[id:string]:any} = {};
-    
-    const start : EventListenerOrEventListenerObject = (e : Event) => {
-        if(e.cancelable){
-            e.preventDefault();
-        }
+    constructor(element:HTMLElement) {
         
-        ival = window.setTimeout(() => {
-            callbacks["hold"](userdata);
-        }, rpTime);
+        if(element instanceof Element)
+            throw new TypeError("HoldButton requires DOM element")
+        
+        this.__has = {
+            "onhold" : false,
+            "onunhold" : false
+        };
+        
+        this.__callbacks = {
+            "main" : () => {},
+            "hold" : () => {},
+            "unhold" : () => {}
+        };
+        
+        this.__setTimeout = 0;
+        this.__userdata = {
+            "main" : () => {}
+        };
+        
+        this.__responseTime = 1000; // Millisecond
+        this.__element = element;
+        
+        this.__init__();
     }
     
-    const end : EventListenerOrEventListenerObject = (e : Event) => {
-        if(e.cancelable){
-            e.preventDefault();
+    /**
+     * Private Properties
+     * */
+    
+    __init__():void {
+        if('ontouchstart' in this.__element && 'ontouchend' in this.__element) {
+            // For Mobile Devices
+            this.__element.addEventListener("touchend", (e:Event) => this.__stop__(e), false);
+            this.__element.addEventListener("touchstart", (e:Event) => this.__start__(e), false);
+        } else if('onmousedown' in this.__element && 'onmouseup' in this.__element) {
+            // For Desktop type devices
+            
+            /**
+             * My best way of solving...mouseup did not fire if
+             * the cursor is out of element.
+             * 
+             * Side Effect: If mouse leave the element
+             *      while onclick it also stop
+             * */
+            this.__element.addEventListener('mouseleave', (e:Event) => this.__stop__(e), false);
+            this.__element.addEventListener('mouseup', (e:Event) => this.__stop__(e), false);
+            this.__element.addEventListener('mousedown', (e:Event) => this.__start__(e), false);
+        } else {
+            throw new Error("No Available Event Listener");
         }
+    }
+    
+    /**
+     * Events 
+     * */
+    __stop__(e:Event):void {
+        if(e.cancelable) e.preventDefault();
         
         try {
             if(e.type != "mouseleave"){
-                // Main Function
-                userdata["click"](userdata);
+                this.__callbacks["main"](this.__userdata);
             }
             
-            // Unhold Function
-            callbacks["unhold"](userdata);
+            this.__callbacks["unhold"](this.__userdata);
         } catch(TypeError){}
-        
+            
         /** Stop or Prevent Timeout to initiate **/
-        clearTimeout(ival);
+        clearTimeout(this.__setTimeout);
+    }
+    __start__(e:Event):void {
+        if(e.cancelable) e.preventDefault();
+        
+        this.__setTimeout = window.setTimeout(() => {
+            this.__callbacks["hold"](this.__userdata);
+        }, this.__responseTime);
     }
     
-    return {
-        "onClick" : (callback : Function) => {
-            userdata["click"] = callback;
-            userdata["func"] = callback;
-            userdata["function"] = callback;
-        },
+    /**
+     * Public Properties
+     * */
+    click():void {
+        this.__callbacks["main"](this.__userdata);
+    }
+    
+    onClick(callback:Function):this {
+        this.__callbacks["main"] = callback;
+        this.__userdata["main"] = callback;
+        return this;
+    }
+    
+    onHold(callback:Function, response?:number):this {
+        if(response && typeof response === "number")
+            this.__responseTime = response;
         
-        "onHold" : (callback : Function, responseTime: number = 500) => {
-            rpTime = responseTime;
-            
-            if(has["onhold"]) {
-                throw new Error("HoldButton.onHold can be call only once.");
-            }
-            has["onhold"] = true;
-            
-            callbacks["hold"] = callback
-            
-            if('ontouchstart' in element && 'ontouchend' in element) {
-                // For Mobile Devices
-                element.addEventListener("touchend", end, false);
-                element.addEventListener("touchstart", start, false);
-            } else if('onmousedown' in element && 'onmouseup' in element) {
-                // For Desktop type devices
-                
-                /**
-                 * My best way of solving...mouseup did not fire if
-                 * the cursor is out of element.
-                 * 
-                 * Side Effect: If mouse leave the element
-                 *      while onclick it also stop
-                 * */
-                element.addEventListener('mouseleave', end, false);
-                element.addEventListener('mouseup', end, false);
-                element.addEventListener('mousedown', start, false);
-            } else {
-                throw new Error("No Available Event Listener");
-            }
-        },
+        if(this.__has["onhold"])
+            throw new TypeError("onHold can be called only once");
         
-        "onUnHold" : (callback : Function) => {
-            if(has["onunhold"]) {
-                throw new Error("HoldButton.onUnHold can be call only once.");
-            }
-            
-            has["onunhold"] = true;
-            
-            callbacks["unhold"] = callback;
-        }
-    };
+        this.__has["onhold"] = true;
+        this.__callbacks["hold"] = callback;
+        
+        return this;
+    }
+    
+    onUnHold(callback:Function):this {
+        if(this.__has["onunhold"])
+            throw new TypeError("onUnHold can be called only once");
+        
+        this.__has["onunhold"] = true;
+        this.__callbacks["unhold"] = callback;
+        return this;
+    }
 }
+
 
 /**
  * Written By Jovan De Guia

@@ -5,7 +5,7 @@
 function Start(data : {[id:string]:any}){
     // Click Every 100ms
     data["ival"] = setInterval(() => {
-        data["func"]();
+        data["main"]();
     }, 100)
 }
 
@@ -16,10 +16,10 @@ function Stop(data:{[id:string]:any}){
 
 window.addEventListener("DOMContentLoaded", () => {
     // Main Input
-    const input : HTMLInputElement = document.querySelector("#num")!;
+    const input:HTMLInputElement = document.querySelector("#num")!;
     
     // Init - Increase
-    const i_btn : {[id:string]:Function} = HoldButton(document.querySelector("#i_num")!);
+    const i_btn:HoldButton = new HoldButton(document.querySelector("#i_num")!);
     
     
     // Main function
@@ -35,7 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
     
     
     // Init - Decrease
-    const d_btn : {[id:string]:Function} = HoldButton(document.querySelector("#d_num")!);
+    const d_btn:HoldButton = new HoldButton(document.querySelector("#d_num")!);
     
     // our main function to call
     d_btn.onClick(() => {
@@ -53,7 +53,7 @@ window.addEventListener("DOMContentLoaded", () => {
     /** With Modal // Pop-up action **/
     
     // Modal Container
-    const m_modal : HTMLElement = document.querySelector("#hold_modal")!;
+    const m_modal:HTMLElement = document.querySelector("#hold_modal")!;
     
     // Close on click
     document.querySelector("#hold_modal_close")!.addEventListener("click", () => {
@@ -61,7 +61,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
     
     // Show Modal after press and hold of main button
-    const m_hb = HoldButton(document.querySelector("#hold_button")!)
+    const m_hb:HoldButton = new HoldButton(document.querySelector("#hold_button")!)
     
     m_hb.onHold(() => {
         m_modal.classList.remove("hidden");

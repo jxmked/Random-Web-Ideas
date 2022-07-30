@@ -1,77 +1,89 @@
 "use strict";
-function HoldButton(element) {
-    var has = {
-        "onhold": false,
-        "onunhold": false
-    };
-    var callbacks = {
-        "hold": function () { },
-        "unhold": function () { },
-        "main": function () { }
-    };
-    var ival;
-    var rpTime;
-    var userdata = {};
-    var start = function (e) {
-        if (e.cancelable) {
-            e.preventDefault();
+var HoldButton = (function () {
+    function HoldButton(element) {
+        if (element instanceof Element)
+            throw new TypeError("HoldButton requires DOM element");
+        this.__has = {
+            "onhold": false,
+            "onunhold": false
+        };
+        this.__callbacks = {
+            "main": function () { },
+            "hold": function () { },
+            "unhold": function () { }
+        };
+        this.__setTimeout = 0;
+        this.__userdata = {
+            "main": function () { }
+        };
+        this.__responseTime = 1000;
+        this.__element = element;
+        this.__init__();
+    }
+    HoldButton.prototype.__init__ = function () {
+        var _this = this;
+        if ('ontouchstart' in this.__element && 'ontouchend' in this.__element) {
+            this.__element.addEventListener("touchend", function (e) { return _this.__stop__(e); }, false);
+            this.__element.addEventListener("touchstart", function (e) { return _this.__start__(e); }, false);
         }
-        ival = window.setTimeout(function () {
-            callbacks["hold"](userdata);
-        }, rpTime);
-    };
-    var end = function (e) {
-        if (e.cancelable) {
-            e.preventDefault();
+        else if ('onmousedown' in this.__element && 'onmouseup' in this.__element) {
+            this.__element.addEventListener('mouseleave', function (e) { return _this.__stop__(e); }, false);
+            this.__element.addEventListener('mouseup', function (e) { return _this.__stop__(e); }, false);
+            this.__element.addEventListener('mousedown', function (e) { return _this.__start__(e); }, false);
         }
+        else {
+            throw new Error("No Available Event Listener");
+        }
+    };
+    HoldButton.prototype.__stop__ = function (e) {
+        if (e.cancelable)
+            e.preventDefault();
         try {
             if (e.type != "mouseleave") {
-                userdata["click"](userdata);
+                this.__callbacks["main"](this.__userdata);
             }
-            callbacks["unhold"](userdata);
+            this.__callbacks["unhold"](this.__userdata);
         }
         catch (TypeError) { }
-        clearTimeout(ival);
+        clearTimeout(this.__setTimeout);
     };
-    return {
-        "onClick": function (callback) {
-            userdata["click"] = callback;
-            userdata["func"] = callback;
-            userdata["function"] = callback;
-        },
-        "onHold": function (callback, responseTime) {
-            if (responseTime === void 0) { responseTime = 500; }
-            rpTime = responseTime;
-            if (has["onhold"]) {
-                throw new Error("HoldButton.onHold can be call only once.");
-            }
-            has["onhold"] = true;
-            callbacks["hold"] = callback;
-            if ('ontouchstart' in element && 'ontouchend' in element) {
-                element.addEventListener("touchend", end, false);
-                element.addEventListener("touchstart", start, false);
-            }
-            else if ('onmousedown' in element && 'onmouseup' in element) {
-                element.addEventListener('mouseleave', end, false);
-                element.addEventListener('mouseup', end, false);
-                element.addEventListener('mousedown', start, false);
-            }
-            else {
-                throw new Error("No Available Event Listener");
-            }
-        },
-        "onUnHold": function (callback) {
-            if (has["onunhold"]) {
-                throw new Error("HoldButton.onUnHold can be call only once.");
-            }
-            has["onunhold"] = true;
-            callbacks["unhold"] = callback;
-        }
+    HoldButton.prototype.__start__ = function (e) {
+        var _this = this;
+        if (e.cancelable)
+            e.preventDefault();
+        this.__setTimeout = window.setTimeout(function () {
+            _this.__callbacks["hold"](_this.__userdata);
+        }, this.__responseTime);
     };
-}
+    HoldButton.prototype.click = function () {
+        this.__callbacks["main"](this.__userdata);
+    };
+    HoldButton.prototype.onClick = function (callback) {
+        this.__callbacks["main"] = callback;
+        this.__userdata["main"] = callback;
+        return this;
+    };
+    HoldButton.prototype.onHold = function (callback, response) {
+        if (response && typeof response === "number")
+            this.__responseTime = response;
+        if (this.__has["onhold"])
+            throw new TypeError("onHold can be called only once");
+        this.__has["onhold"] = true;
+        this.__callbacks["hold"] = callback;
+        return this;
+    };
+    HoldButton.prototype.onUnHold = function (callback) {
+        if (this.__has["onunhold"])
+            throw new TypeError("onUnHold can be called only once");
+        this.__has["onunhold"] = true;
+        this.__callbacks["unhold"] = callback;
+        return this;
+    };
+    return HoldButton;
+}());
 function Start(data) {
     data["ival"] = setInterval(function () {
-        data["func"]();
+        data["main"]();
     }, 100);
 }
 function Stop(data) {
@@ -79,13 +91,13 @@ function Stop(data) {
 }
 window.addEventListener("DOMContentLoaded", function () {
     var input = document.querySelector("#num");
-    var i_btn = HoldButton(document.querySelector("#i_num"));
+    var i_btn = new HoldButton(document.querySelector("#i_num"));
     i_btn.onClick(function () {
         input.value = String(Number(input.value) + 1);
     });
     i_btn.onHold(Start, 500);
     i_btn.onUnHold(Stop);
-    var d_btn = HoldButton(document.querySelector("#d_num"));
+    var d_btn = new HoldButton(document.querySelector("#d_num"));
     d_btn.onClick(function () {
         input.value = String(Number(input.value) - 1);
     });
@@ -95,7 +107,7 @@ window.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#hold_modal_close").addEventListener("click", function () {
         m_modal.classList.add("hidden");
     });
-    var m_hb = HoldButton(document.querySelector("#hold_button"));
+    var m_hb = new HoldButton(document.querySelector("#hold_button"));
     m_hb.onHold(function () {
         m_modal.classList.remove("hidden");
     });
