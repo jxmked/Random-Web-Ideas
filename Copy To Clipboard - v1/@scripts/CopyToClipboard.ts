@@ -4,13 +4,21 @@
  * */
  
 class CopyToClipboard {
+    
     method : string;
-    clickCallback : Function = () => {};
-    thenCallback : Function = () => {};
-    catchCallback : Function = () => {};
+    element : HTMLButtonElement;
+    
+    __clickCallback : Function = () => {};
+    __thenCallback : Function = () => {};
+    __catchCallback : Function = () => {};
+    
+    // Time to re-interact again
+    __interval : number;
+    
+    __selections : {[id:string]:Function};
     
     constructor(element : HTMLButtonElement) {
-
+        
         // Check Available Method For Copying
         if (window.navigator && window.navigator.clipboard) {
             this.method = "nav";
@@ -22,40 +30,34 @@ class CopyToClipboard {
             throw new Error("No Available Method To Use CopyToClipboard");
         }
         
-        const selections : {[id:string]:Function} = {
-            "nav" : this.copyNavigator,
-            "exec" : this.copyExec
+        this.element = element;
+        
+        // Private
+        this.__interval = 1000;
+        this.__selections = {
+            "nav" : this.__copyNavigator,
+            "exec" : this.__copyExec
         };
         
-        let ival : ReturnType<typeof window.setTimeout>;
-        let flag : boolean = false;
-        
-        element.addEventListener("click", (e) => {
-            if(flag) return;
+        // Prevent Spamming Buttons
+        const clickEvent : EventListenerOrEventListenerObject = () => {
+            window.setTimeout(() => this.element.addEventListener("click", clickEvent), this.__interval);
+            this.element.removeEventListener("click", clickEvent);
             
-            ival = window.setTimeout(() => flag = false, 1000)
-            flag = true;
-            
-            try {
-                let str:string = this.clickCallback(element);
-                str = this.__sanitizeString(str);
-                
-                selections[this.method](str, this.thenCallback, this.catchCallback);
-            } catch(e) {
-                this.catchCallback(e);
-            }
-        });
+            this.click()
+        }
         
+        element.addEventListener("click", clickEvent, false);
     }
     
-    copyExec(str : string, s : Function, c : Function) : void{
+    __copyExec(str : string, s : Function) : void {
         if(document.execCommand("copy")) s();
-        else c();
+        else throw new Error("Error While Copying");
     }
     
-    copyNavigator(str : string, s : Function, c : Function) : void {
+    __copyNavigator(str : string, s : Function) : void {
         // @ts-expect-error
-        window.navigator.clipboard.writeText(str).then(s).catch(c);
+        window.navigator.clipboard.writeText(str).then(s).catch((e:Event) => { throw e });
     }
     
     /**
@@ -64,16 +66,30 @@ class CopyToClipboard {
     __sanitizeString(str: string) : string {
         return str.trim();
     }
+    
+    click() : void {
+        try {
+            let str:string = this.__clickCallback(this.element);
+            str = this.__sanitizeString(str);
+           
+            this.__selections[this.method](str, this.__thenCallback);
+        } catch(e) {
+            this.__catchCallback(e);
+        }
+    }
+    
     onClick(callback : Function) : this {
-        this.clickCallback = callback;
+        this.__clickCallback = callback;
         return this;
     }
+    
     then(callback : Function) : this {
-        this.thenCallback = callback;
+        this.__thenCallback = callback;
         return this;
     }
+    
     catch(callback : Function) : this {
-        this.catchCallback = callback;
+        this.__catchCallback = callback;
         return this;
     }
 }

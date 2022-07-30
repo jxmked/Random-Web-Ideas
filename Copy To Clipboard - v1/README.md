@@ -1,6 +1,6 @@
 # Copy To Clipboard Version 1
 
-[Live Demo](https://jxmked.github.io/Buttons-Toggles-Design/Copy%20To%20Clipboard%20-%20v1/)
+[Live Demo](https://jxmked.github.io/Random-Web-Ideas/Copy%20To%20Clipboard%20-%20v1/)
 
 ----
 
