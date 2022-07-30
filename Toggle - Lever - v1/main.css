@@ -1,62 +1,73 @@
 body {
-  --mw: 650px;
-  --border-color: rgb(54, 54, 56);
   width: 100%;
-  max-width: var(--mw);
+  max-width: 650px;
   height: auto;
   font-size: 10px;
   display: block;
   white-space: nowrap;
   font-family: "Helvetica", "Arial", "Sans-Serif";
   background-color: #f2f2f7;
-  color: #444446;
   margin: 0 auto;
-}
-body button, body button:before, body button:after,
-body input, body input:before, body input:after {
-  background-color: #f2f2f7;
-  color: #444446;
-}
-body input::-webkit-outer-spin-button,
-body input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-body input[type="number"] {
-  -moz-appearance: textfield;
 }
 body > .header {
   width: 70%;
-  max-width: var(--mw);
+  max-width: 650px;
   background-color: #e5e5ea;
   margin: 1.2rem auto 0 auto;
   border: 1px solid;
-  border-color: var(--border-color);
+  border-color: #363638;
   border-radius: 7px;
   text-align: center;
 }
 body > .header h3 {
   display: inline-block;
+  color: #2c2c24;
 }
-body > .container {
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+button, button:before, button:after,
+input, input:before, input:after {
+  background-color: #f2f2f7;
+  color: #444446;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.container {
   border: 1px solid #8e8e93;
   padding: 20px;
   border-radius: 15px;
   background: inherit;
   z-index: 9;
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
+  max-width: 650px;
 }
-body > .container > .panel {
+.container > .panel {
   margin-bottom: 5px;
   text-align: center;
 }
-body > .container > .panel:not(:last-child) {
+.container > .panel:not(:last-child) {
   padding-bottom: 7px;
   border-bottom: 1px solid;
-  border-color: var(--border-color);
+  border-color: #363638;
+}
+.container > .panel > h1, .container > .panel > h2, .container > .panel > h3,
+.container > .panel > h4, .container > .panel > h5, .container > .panel > h6 {
+  display: block;
+  font-size: initial;
 }
 
 :root {
@@ -148,14 +159,14 @@ body > .container > .panel:not(:last-child) {
 }
 
 footer {
-  max-width: var(--mw);
+  max-width: 650px;
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 95%;
   border-top: 1px solid;
-  border-color: var(--border-color);
+  border-color: #363638;
   font-size: 1.2rem;
   margin: 0 0 30px 0;
 }
@@ -168,6 +179,7 @@ footer > div:first-child {
   margin: 10px 0 7px 0;
   font-weight: 500;
   display: block;
+  color: #2c2c24;
 }
 footer > div h4 {
   font-size: 1.3rem;
@@ -175,24 +187,27 @@ footer > div h4 {
   letter-spacing: 1.5px;
   padding: 0;
   margin: 10px 0 5px 15px;
-}
-footer > div > label {
-  display: block;
+  color: #2c2c24;
 }
 footer label[for="copyright"] {
   position: absolute;
   right: 25px;
+  color: #2c2c24;
 }
-footer label[for="developer"] {
+footer label[for="developer"],
+footer label[for="socials"],
+footer label[for="socials"] > span,
+footer > div > label {
   margin: 0 0 0 20px;
+  color: #2c2c24;
 }
 footer label[for="socials"],
 footer label[for="socials"] > span {
   display: block;
-  margin: 0 0 0 20px;
 }
 footer a {
   color: inherit;
+  text-decoration-line: underline;
 }
 
 @media (min-width: 450px) {
@@ -201,5 +216,3 @@ footer a {
     display: inline-block;
   }
 }
-
-/*# sourceMappingURL=main.css.map */

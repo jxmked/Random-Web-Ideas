@@ -21,7 +21,7 @@ body > .header {
 }
 body > .header h3 {
   display: inline-block;
-  color: #2c2c2e;
+  color: #2c2c24;
 }
 
 .container {
@@ -98,7 +98,7 @@ input[type="number"] {
   white-space: initial;
   border-radius: 10px 10px 0 0;
   border-color: #363638;
-  color: #2c2c2e;
+  color: #2c2c24;
   background-color: inherit;
 }
 .panel > div > button {
@@ -169,7 +169,7 @@ footer > div:first-child {
   margin: 10px 0 7px 0;
   font-weight: 500;
   display: block;
-  color: #2c2c2e;
+  color: #2c2c24;
 }
 footer > div h4 {
   font-size: 1.3rem;
@@ -177,19 +177,19 @@ footer > div h4 {
   letter-spacing: 1.5px;
   padding: 0;
   margin: 10px 0 5px 15px;
-  color: #2c2c2e;
+  color: #2c2c24;
 }
 footer label[for="copyright"] {
   position: absolute;
   right: 25px;
-  color: #2c2c2e;
+  color: #2c2c24;
 }
 footer label[for="developer"],
 footer label[for="socials"],
 footer label[for="socials"] > span,
 footer > div > label {
   margin: 0 0 0 20px;
-  color: #2c2c2e;
+  color: #2c2c24;
 }
 footer label[for="socials"],
 footer label[for="socials"] > span {
@@ -206,5 +206,3 @@ footer a {
     display: inline-block;
   }
 }
-
-/*# sourceMappingURL=main.css.map */

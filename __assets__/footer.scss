@@ -1,0 +1,67 @@
+footer {
+    max-width: $max-width;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    border-top: 1px solid;
+    border-color: $border-color;
+    font-size: 1.2rem;
+    
+    // Fixes Outside Element
+    margin: 0 0 30px 0;
+    
+    > div {
+        padding: 0;
+        margin: 1px;
+        
+        &:first-child {
+            text-align: center;
+            margin: 10px 0 7px 0;
+            font-weight: 500;
+            display: block;
+            color: $text-color;
+        }
+        
+        h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            padding: 0;
+            margin: 10px 0 5px 15px;
+            color: $text-color;
+        }
+    }
+    
+    label[for="copyright"] {
+        position: absolute;
+        right: 25px;
+        color: $text-color;
+    }
+    
+    label[for="developer"],
+    label[for="socials"],
+    label[for="socials"] > span,
+    > div > label {
+        margin: 0 0 0 20px;
+        color: $text-color;
+    }
+    
+    label[for="socials"],
+    label[for="socials"] > span {
+        display: block;
+    }
+    
+    a {
+        color: inherit;
+        text-decoration-line: underline;
+    }
+}
+
+@media (min-width: 450px) {
+    footer > div,
+    footer > div > label {
+        display: inline-block;
+    }
+}
