@@ -88,9 +88,8 @@ class HoldButton {
         if(e.cancelable) e.preventDefault();
         
         try {
-            if(e.type != "mouseleave"){
-                this.__callbacks["main"](this.__userdata);
-            }
+            if(e.type != "mouseleave")
+                this.click();
             
             this.__callbacks["unhold"](this.__userdata);
         } catch(TypeError){}
