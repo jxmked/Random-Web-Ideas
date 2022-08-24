@@ -4,9 +4,9 @@
 
 window.addEventListener("DOMContentLoaded", () => {
     const SOME_QOUTES:string[] = [
-        "Play along.",
+        "Game start.",
         "Greate game.",
-        "It's open source",
+        "It's open source!",
         "Nice play",
         "Written in Typescript!",
         "Have a good day!"
@@ -15,12 +15,9 @@ window.addEventListener("DOMContentLoaded", () => {
     const BLOCKS_DOM:HTMLCollectionOf<Element> = document.getElementsByClassName('blocks')!;
     const MESSAGE_DOM:HTMLElement = document.getElementById('message-text')!;
     const RESET_BTN_DOM:HTMLButtonElement = <HTMLButtonElement> document.getElementById('reset-btn')!;
-    const FRESH_ARRAY:string[]|undefined[] = Array.apply(null, Array(BLOCKS_DOM.length)).map(() => void 0);
-    const DOM_CLASS:{[id:string]:string} = {
-        "opponent":"opponent",
-        "player":"player"
-    };
-    
+
+    const PLAYER:string = "player";
+    const COMPUTER:string = "opponent";
     const STRIKED_LINE:string = "striked";
     
     const STRAIGHTS:number[][] = [
@@ -28,6 +25,8 @@ window.addEventListener("DOMContentLoaded", () => {
         [0,4,8], [2,4,6], // Cross
         [0,3,6], [1,4,7], [2,5,8] // Vertical
     ];
+    
+    const FRESH_ARRAY:|undefined[] = Array.apply(null, Array(BLOCKS_DOM.length)).map(() => void 0);
     
     /**
      * WIN, LOSE, DRAW
@@ -42,7 +41,7 @@ window.addEventListener("DOMContentLoaded", () => {
     /**
      * Message 
      * */
-    const [_null_, changeText] = useState((e:HTMLElement) => {
+    const [_, changeText] = useState((e:HTMLElement) => {
         if(PLAYER_STATUS == "") {
             MESSAGE_DOM.classList.remove('win');
             MESSAGE_DOM.classList.remove('lose');
@@ -51,15 +50,15 @@ window.addEventListener("DOMContentLoaded", () => {
         } else {
             switch(PLAYER_STATUS) {
                 case 'WIN':
-                    MESSAGE_DOM.innerText = 'You won!'
+                    MESSAGE_DOM.innerText = 'You won!';
                     MESSAGE_DOM.classList.add('win');
                     break;
                 case 'LOSE':
-                    MESSAGE_DOM.innerText = 'You lose!'
+                    MESSAGE_DOM.innerText = 'You lose!';
                     MESSAGE_DOM.classList.add('lose');
                     break;
                 case 'DRAW':
-                    MESSAGE_DOM.innerText = 'Draw!'
+                    MESSAGE_DOM.innerText = 'Draw!';
                     MESSAGE_DOM.classList.add('draw');
                     break;
             }
@@ -68,6 +67,9 @@ window.addEventListener("DOMContentLoaded", () => {
         
     }, MESSAGE_DOM);
     
+    /**
+     * Perform Reset
+     * */
     const RESET_FUNCTION:EventListenerOrEventListenerObject = () => {
         PLAYER_STATUS = "";
         make_turn(0, BLOCKS_DOM[0], "reset");
@@ -80,16 +82,19 @@ window.addEventListener("DOMContentLoaded", () => {
      * */
     const RESET_BLOCK:Function = (index:number) => {
         BLOCKS_DOM[index].classList.remove(STRIKED_LINE);
-        BLOCKS_DOM[index].classList.remove(DOM_CLASS['player']);
-        BLOCKS_DOM[index].classList.remove(DOM_CLASS['opponent']);
+        BLOCKS_DOM[index].classList.remove(PLAYER);
+        BLOCKS_DOM[index].classList.remove(COMPUTER);
     }
     
+    /**
+     * Highlight straights
+     * */
     const HIGHLIGHT_STRAIGHTS:Function = (line:number[]) => {
         line.forEach((num:number) => {
             RESET_BLOCK(num);
             BLOCKS_DOM[num].classList.add(STRIKED_LINE);
         });
-    }
+    };
     
     /**
      * Check for straights.
@@ -101,9 +106,7 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     };
     
-    const IS_BLOCK_TAKEN:Function = (index:number) => {
-        return BLOCKS_ARRAY()[index] !== void 0;
-    };
+    const IS_BLOCK_TAKEN:Function = (index:number) =>  BLOCKS_ARRAY()[index] !== void 0;
     
     const [BLOCKS_ARRAY, make_turn, block_change] = useState((current_value:string[], index:number, element:any, challenger:any) => {
         /**
@@ -131,8 +134,10 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         }
         
-        
-        let res:number[][] = CHECK_STRAIGHT(new_table, DOM_CLASS['player']);
+        /**
+         * Check if player Wins
+         * */
+        let res:number[][] = CHECK_STRAIGHT(new_table, PLAYER);
         if(res.length > 0) {
             res.forEach((x:number[]) => HIGHLIGHT_STRAIGHTS(x));
             // Player Winner
@@ -143,8 +148,10 @@ window.addEventListener("DOMContentLoaded", () => {
             return;
         }
         
-        res = CHECK_STRAIGHT(new_table, DOM_CLASS['opponent']);
-        
+        /**
+         * Check If Opponent Wins
+         * */
+        res = CHECK_STRAIGHT(new_table, COMPUTER);
         if(res.length > 0) {
             res.forEach((x:number[]) => HIGHLIGHT_STRAIGHTS(x));
             // Opponent Winner
@@ -162,102 +169,92 @@ window.addEventListener("DOMContentLoaded", () => {
             changeText();
             return;
         }
-        
-    })
+    });
     
     /**
      * Our Opponent - AI
      * */
     const ENEMY:Function = () => {
         const available_moves:number[] = BLOCKS_ARRAY().map((v:string,index:number) => {
-             return (v == void 0) ? index : void 0
+             return (v == void 0) ? index : void 0;
         }).filter((k:number) => k != void 0);
         
-        const NAME:string = DOM_CLASS['opponent'];
-        const OPPONENT:string = DOM_CLASS['player'];
-        
         const check_moves:Function = (name:string) => {
-            const result:number[] = [];
             /**
              * Check Every Steps for any chances
              * 
              * 1 dept
              * */
-            available_moves.forEach((index:number) => {
-                const test:string[] = [...BLOCKS_ARRAY()]
+            return available_moves.filter((index:number) => {
+                const test:string[] = [...BLOCKS_ARRAY()];
                 test[index] = name;
-                if(CHECK_STRAIGHT(test, name).length > 0) {
-                    result.push(index);
-                }
+                return CHECK_STRAIGHT(test, name).length > 0;
             });
-            
-            return result;
-        }
+        };
         
         const random:Function = (arr:number[]) => Math.floor(Math.random() * arr.length);
         
         let a:number[];
         
-        a = check_moves(NAME);
+        a = check_moves(COMPUTER);
         if(a.length > 0) {
             // Perform Winning Move
             return a[random(a)];
         }
         
-        a = check_moves(OPPONENT);
+        a = check_moves(PLAYER);
         if(a.length > 0) {
             // Perform Blocking Move
             return a[random(a)];
         }
         
         // Randomly select available Move
-        return available_moves[random(available_moves)];
+        a = available_moves;
+        return a[random(a)];
     }
     
-    const BLOCK_PRESS_FUNCTION:Function = (evt:Event, index:number) => {
-        
-        if(PLAYER_STATUS !== "" || ! AI_DOES_MOVE || IS_BLOCK_TAKEN(index))
-            return;
-        
-        // Prevent Reset button when System Making Turn on each Opponent
-        RESET_BTN_DOM.removeEventListener('click', RESET_FUNCTION, true)
-        AI_DOES_MOVE = false
-        
-        make_turn(index, BLOCKS_DOM[index], DOM_CLASS['player']);
-        
-        /**
-         *  Add a little bit delay turn on our AI
-         * */
-        window.setTimeout(() => {
+    /**
+     * Main Blocks Event Handler 
+     * */
+    for(let index:number = 0; index < BLOCKS_DOM.length; index++) {
+        BLOCKS_DOM[index].addEventListener('click', (evt:Event) => {
+            if(PLAYER_STATUS !== "" || ! AI_DOES_MOVE || IS_BLOCK_TAKEN(index))
+                return;
+            
+            // Prevent Reset button when System Making Turn on each Opponent
+            RESET_BTN_DOM.removeEventListener('click', RESET_FUNCTION, true)
+            AI_DOES_MOVE = false
+            
+            make_turn(index, BLOCKS_DOM[index], PLAYER);
+            
             if(PLAYER_STATUS !== "")
                 return;
-                
-            let ai_turn:number = ENEMY();
-            
-            make_turn(ai_turn, BLOCKS_DOM[ai_turn], DOM_CLASS['opponent']);
-            AI_DOES_MOVE = true;
             
             /**
-             * Re-add event listener
+             *  Add a little bit delay turn on our AI
              * */
-            RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
-        }, 200);
-    };
-    
-    for(let index:number = 0; index < BLOCKS_DOM.length; index++) {
-        BLOCKS_DOM[index].addEventListener('click', (evt:Event) => BLOCK_PRESS_FUNCTION(evt, index));
+            window.setTimeout(() => {
+                let ai_turn:number = ENEMY();
+                
+                make_turn(ai_turn, BLOCKS_DOM[ai_turn], COMPUTER);
+                AI_DOES_MOVE = true;
+                
+                /**
+                 * Re-add event listener
+                 * */
+                RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
+            }, 200);
+        });
     }
     
     /**
      * Reset
      * */
      RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
-    
-    
 });
 
 /**
  * Written By Jovan De Guia
- * Project Name: Copy To Clipboard
+ * Project Name: useState Demo -Tic Tac Toe
  * Github: jxmked
  * */

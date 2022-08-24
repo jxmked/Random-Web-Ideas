@@ -10,9 +10,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 window.addEventListener("DOMContentLoaded", function () {
     var SOME_QOUTES = [
-        "Play along.",
+        "Game start.",
         "Greate game.",
-        "It's open source",
+        "It's open source!",
         "Nice play",
         "Written in Typescript!",
         "Have a good day!"
@@ -20,17 +20,15 @@ window.addEventListener("DOMContentLoaded", function () {
     var BLOCKS_DOM = document.getElementsByClassName('blocks');
     var MESSAGE_DOM = document.getElementById('message-text');
     var RESET_BTN_DOM = document.getElementById('reset-btn');
-    var FRESH_ARRAY = Array.apply(null, Array(BLOCKS_DOM.length)).map(function () { return void 0; });
-    var DOM_CLASS = {
-        "opponent": "opponent",
-        "player": "player"
-    };
+    var PLAYER = "player";
+    var COMPUTER = "opponent";
     var STRIKED_LINE = "striked";
     var STRAIGHTS = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
         [0, 4, 8], [2, 4, 6],
         [0, 3, 6], [1, 4, 7], [2, 5, 8]
     ];
+    var FRESH_ARRAY = Array.apply(null, Array(BLOCKS_DOM.length)).map(function () { return void 0; });
     var PLAYER_STATUS = "";
     var AI_DOES_MOVE = true;
     var _a = useState(function (e) {
@@ -57,7 +55,7 @@ window.addEventListener("DOMContentLoaded", function () {
             }
             RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
         }
-    }, MESSAGE_DOM), _null_ = _a[0], changeText = _a[1];
+    }, MESSAGE_DOM), _ = _a[0], changeText = _a[1];
     var RESET_FUNCTION = function () {
         PLAYER_STATUS = "";
         make_turn(0, BLOCKS_DOM[0], "reset");
@@ -66,8 +64,8 @@ window.addEventListener("DOMContentLoaded", function () {
     };
     var RESET_BLOCK = function (index) {
         BLOCKS_DOM[index].classList.remove(STRIKED_LINE);
-        BLOCKS_DOM[index].classList.remove(DOM_CLASS['player']);
-        BLOCKS_DOM[index].classList.remove(DOM_CLASS['opponent']);
+        BLOCKS_DOM[index].classList.remove(PLAYER);
+        BLOCKS_DOM[index].classList.remove(COMPUTER);
     };
     var HIGHLIGHT_STRAIGHTS = function (line) {
         line.forEach(function (num) {
@@ -80,9 +78,7 @@ window.addEventListener("DOMContentLoaded", function () {
             return straight.filter(function (i) { return table[i] == challenger; }).length == straight.length;
         });
     };
-    var IS_BLOCK_TAKEN = function (index) {
-        return BLOCKS_ARRAY()[index] !== void 0;
-    };
+    var IS_BLOCK_TAKEN = function (index) { return BLOCKS_ARRAY()[index] !== void 0; };
     var _b = useState(function (current_value, index, element, challenger) {
         if (challenger == "reset")
             return __spreadArray([], FRESH_ARRAY, true);
@@ -99,7 +95,7 @@ window.addEventListener("DOMContentLoaded", function () {
                 RESET_BLOCK(index);
             }
         }
-        var res = CHECK_STRAIGHT(new_table, DOM_CLASS['player']);
+        var res = CHECK_STRAIGHT(new_table, PLAYER);
         if (res.length > 0) {
             res.forEach(function (x) { return HIGHLIGHT_STRAIGHTS(x); });
             console.log("Player wins");
@@ -108,7 +104,7 @@ window.addEventListener("DOMContentLoaded", function () {
             changeText();
             return;
         }
-        res = CHECK_STRAIGHT(new_table, DOM_CLASS['opponent']);
+        res = CHECK_STRAIGHT(new_table, COMPUTER);
         if (res.length > 0) {
             res.forEach(function (x) { return HIGHLIGHT_STRAIGHTS(x); });
             console.log("AI wins");
@@ -128,48 +124,42 @@ window.addEventListener("DOMContentLoaded", function () {
         var available_moves = BLOCKS_ARRAY().map(function (v, index) {
             return (v == void 0) ? index : void 0;
         }).filter(function (k) { return k != void 0; });
-        var NAME = DOM_CLASS['opponent'];
-        var OPPONENT = DOM_CLASS['player'];
         var check_moves = function (name) {
-            var result = [];
-            available_moves.forEach(function (index) {
+            return available_moves.filter(function (index) {
                 var test = __spreadArray([], BLOCKS_ARRAY(), true);
                 test[index] = name;
-                if (CHECK_STRAIGHT(test, name).length > 0) {
-                    result.push(index);
-                }
+                return CHECK_STRAIGHT(test, name).length > 0;
             });
-            return result;
         };
         var random = function (arr) { return Math.floor(Math.random() * arr.length); };
         var a;
-        a = check_moves(NAME);
+        a = check_moves(COMPUTER);
         if (a.length > 0) {
             return a[random(a)];
         }
-        a = check_moves(OPPONENT);
+        a = check_moves(PLAYER);
         if (a.length > 0) {
             return a[random(a)];
         }
-        return available_moves[random(available_moves)];
-    };
-    var BLOCK_PRESS_FUNCTION = function (evt, index) {
-        if (PLAYER_STATUS !== "" || !AI_DOES_MOVE || IS_BLOCK_TAKEN(index))
-            return;
-        RESET_BTN_DOM.removeEventListener('click', RESET_FUNCTION, true);
-        AI_DOES_MOVE = false;
-        make_turn(index, BLOCKS_DOM[index], DOM_CLASS['player']);
-        window.setTimeout(function () {
-            if (PLAYER_STATUS !== "")
-                return;
-            var ai_turn = ENEMY();
-            make_turn(ai_turn, BLOCKS_DOM[ai_turn], DOM_CLASS['opponent']);
-            AI_DOES_MOVE = true;
-            RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
-        }, 200);
+        a = available_moves;
+        return a[random(a)];
     };
     var _loop_1 = function (index) {
-        BLOCKS_DOM[index].addEventListener('click', function (evt) { return BLOCK_PRESS_FUNCTION(evt, index); });
+        BLOCKS_DOM[index].addEventListener('click', function (evt) {
+            if (PLAYER_STATUS !== "" || !AI_DOES_MOVE || IS_BLOCK_TAKEN(index))
+                return;
+            RESET_BTN_DOM.removeEventListener('click', RESET_FUNCTION, true);
+            AI_DOES_MOVE = false;
+            make_turn(index, BLOCKS_DOM[index], PLAYER);
+            if (PLAYER_STATUS !== "")
+                return;
+            window.setTimeout(function () {
+                var ai_turn = ENEMY();
+                make_turn(ai_turn, BLOCKS_DOM[ai_turn], COMPUTER);
+                AI_DOES_MOVE = true;
+                RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
+            }, 200);
+        });
     };
     for (var index = 0; index < BLOCKS_DOM.length; index++) {
         _loop_1(index);
