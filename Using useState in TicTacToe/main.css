@@ -144,7 +144,7 @@ input[type="number"] {
   background-color: #ff6482;
 }
 .panel > div.panel-board > #main-board tr td.blocks.striked {
-  background-color: #30db5b;
+  background-color: #cfb53b;
 }
 .panel > div.panel-reset > button, .panel > div.panel-reset button:before, .panel > div.panel-reset button:after {
   width: 50%;

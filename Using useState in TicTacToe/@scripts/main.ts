@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const BLOCKS_DOM:HTMLCollectionOf<Element> = document.getElementsByClassName('blocks')!;
     const MESSAGE_DOM:HTMLElement = document.getElementById('message-text')!;
     const RESET_BTN_DOM:HTMLButtonElement = <HTMLButtonElement> document.getElementById('reset-btn')!;
-    
+    const FRESH_ARRAY:string[]|undefined[] = Array.apply(null, Array(BLOCKS_DOM.length)).map(() => void 0);
     const DOM_CLASS:{[id:string]:string} = {
         "opponent":"opponent",
         "player":"player"
@@ -42,53 +42,41 @@ window.addEventListener("DOMContentLoaded", () => {
     /**
      * Message 
      * */
-    const [_null_, changeText] = useState((e:HTMLElement, str:string, status:string) => {
-        MESSAGE_DOM.innerText = str;
-        if(status == "") {
+    const [_null_, changeText] = useState((e:HTMLElement) => {
+        if(PLAYER_STATUS == "") {
             MESSAGE_DOM.classList.remove('win');
             MESSAGE_DOM.classList.remove('lose');
             MESSAGE_DOM.classList.remove('draw');
+            MESSAGE_DOM.innerText = SOME_QOUTES[Math.floor(Math.random() * SOME_QOUTES.length)];
         } else {
-            MESSAGE_DOM.classList.add(status);
+            switch(PLAYER_STATUS) {
+                case 'WIN':
+                    MESSAGE_DOM.innerText = 'You won!'
+                    MESSAGE_DOM.classList.add('win');
+                    break;
+                case 'LOSE':
+                    MESSAGE_DOM.innerText = 'You lose!'
+                    MESSAGE_DOM.classList.add('lose');
+                    break;
+                case 'DRAW':
+                    MESSAGE_DOM.innerText = 'Draw!'
+                    MESSAGE_DOM.classList.add('draw');
+                    break;
+            }
+            RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
         }
         
     }, MESSAGE_DOM);
     
-    const HALT:Function = () => {
-        switch(PLAYER_STATUS) {
-            case 'WIN':
-                changeText('You won!', "win");
-                break;
-            case 'LOSE':
-                changeText('You lose!', 'lose');
-                break;
-            case 'DRAW':
-                changeText('Draw!', 'draw');
-                break;
-            
-            default:
-                changeText(SOME_QOUTES[Math.floor(Math.random() * SOME_QOUTES.length)], '');
-        }
-        /**
-         * Re-add event listener
-         * */
-        RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
-
-    };
-    
     const RESET_FUNCTION:EventListenerOrEventListenerObject = () => {
-        MESSAGE_DOM.classList.remove('win');
-        MESSAGE_DOM.classList.remove('lose');
-        MESSAGE_DOM.classList.remove('draw');
         PLAYER_STATUS = "";
         make_turn(0, BLOCKS_DOM[0], "reset");
-        HALT();
+        changeText();
         AI_DOES_MOVE = true;
-        //RESET_BLOCK();
-         
-    }
+    };
+    
     /**
-     * Remove any System Added Class Name in Cell block
+     * Remove any System Added Class Name in Cell block DOM
      * */
     const RESET_BLOCK:Function = (index:number) => {
         BLOCKS_DOM[index].classList.remove(STRIKED_LINE);
@@ -108,45 +96,28 @@ window.addEventListener("DOMContentLoaded", () => {
      * Any winning straight line(s)?
      * */
     const CHECK_STRAIGHT:Function = (table:string[], challenger:string) => {
-        const wins:number[][] = [];
-        
-        for(const straight of STRAIGHTS){
-            let win:number = 0;
-            straight.forEach((cell)=>{
-                if(table[cell] == challenger) {
-                    win++;
-                }
-            });
-            
-            /**
-             * Since, the value of win will reach the length of straight
-             * if we have a successful straigh line
-             * */
-            if(win === straight.length) {
-                wins.push(straight);
-            }
-        }
-        
-        return wins;
-    }
+        return STRAIGHTS.filter((straight:number[]) => {
+            return straight.filter((i:number) => table[i] == challenger).length == straight.length;
+        });
+    };
     
     const IS_BLOCK_TAKEN:Function = (index:number) => {
         return BLOCKS_ARRAY()[index] !== void 0;
-    }
+    };
     
-    const [BLOCKS_ARRAY, make_turn, block_change] = useState((current_value:string[],index:number, element:any, challenger:any) => {
+    const [BLOCKS_ARRAY, make_turn, block_change] = useState((current_value:string[], index:number, element:any, challenger:any) => {
         /**
          *  make_turn function will trigger this function and return cloned modified array
          * */
          
         if(challenger == "reset")
-            return Array.apply(null, Array(9)).map(() => void 0);
+            return [...FRESH_ARRAY];
         
         const cloned:string[] = [...current_value]; // Clone
         
         cloned[index] = challenger;
         return cloned;
-    }, Array.apply(null, Array(9)).map(() => void 0));
+    }, [...FRESH_ARRAY]);
     
     block_change((new_table:string[]) => {
         /**
@@ -168,7 +139,7 @@ window.addEventListener("DOMContentLoaded", () => {
             console.log("Player wins");
             console.log("Straights: ", res);
             PLAYER_STATUS = "WIN";
-            HALT();
+            changeText();
             return;
         }
         
@@ -180,7 +151,7 @@ window.addEventListener("DOMContentLoaded", () => {
             console.log("AI wins");
             console.log("Straights: ", res);
             PLAYER_STATUS = "LOSE";
-            HALT();
+            changeText();
             return;
         }
         
@@ -188,7 +159,7 @@ window.addEventListener("DOMContentLoaded", () => {
             // Draw | No Available Moves
             console.log("No Available Moves");
             PLAYER_STATUS = "DRAW";
-            HALT();
+            changeText();
             return;
         }
         
@@ -198,12 +169,9 @@ window.addEventListener("DOMContentLoaded", () => {
      * Our Opponent - AI
      * */
     const ENEMY:Function = () => {
-        const available_moves:number[] = []
-        BLOCKS_ARRAY().forEach((move:string, index:number) => {
-            if(move === void 0) {
-                available_moves.push(index);
-            }
-        });
+        const available_moves:number[] = BLOCKS_ARRAY().map((v:string,index:number) => {
+             return (v == void 0) ? index : void 0
+        }).filter((k:number) => k != void 0);
         
         const NAME:string = DOM_CLASS['opponent'];
         const OPPONENT:string = DOM_CLASS['player'];
@@ -211,7 +179,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const check_moves:Function = (name:string) => {
             const result:number[] = [];
             /**
-             * Check Every Steps for chances
+             * Check Every Steps for any chances
              * 
              * 1 dept
              * */
@@ -226,9 +194,7 @@ window.addEventListener("DOMContentLoaded", () => {
             return result;
         }
         
-        const random:Function = (arr:number[]) => {
-            return Math.floor(Math.random() * arr.length);
-        };
+        const random:Function = (arr:number[]) => Math.floor(Math.random() * arr.length);
         
         let a:number[];
         
@@ -244,6 +210,7 @@ window.addEventListener("DOMContentLoaded", () => {
             return a[random(a)];
         }
         
+        // Randomly select available Move
         return available_moves[random(available_moves)];
     }
     
@@ -252,7 +219,7 @@ window.addEventListener("DOMContentLoaded", () => {
         if(PLAYER_STATUS !== "" || ! AI_DOES_MOVE || IS_BLOCK_TAKEN(index))
             return;
         
-        // Prevent Reset button when System Making Turn on every Opponent
+        // Prevent Reset button when System Making Turn on each Opponent
         RESET_BTN_DOM.removeEventListener('click', RESET_FUNCTION, true)
         AI_DOES_MOVE = false
         

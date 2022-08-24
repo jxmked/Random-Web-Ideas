@@ -20,6 +20,7 @@ window.addEventListener("DOMContentLoaded", function () {
     var BLOCKS_DOM = document.getElementsByClassName('blocks');
     var MESSAGE_DOM = document.getElementById('message-text');
     var RESET_BTN_DOM = document.getElementById('reset-btn');
+    var FRESH_ARRAY = Array.apply(null, Array(BLOCKS_DOM.length)).map(function () { return void 0; });
     var DOM_CLASS = {
         "opponent": "opponent",
         "player": "player"
@@ -32,40 +33,35 @@ window.addEventListener("DOMContentLoaded", function () {
     ];
     var PLAYER_STATUS = "";
     var AI_DOES_MOVE = true;
-    var _a = useState(function (e, str, status) {
-        MESSAGE_DOM.innerText = str;
-        if (status == "") {
+    var _a = useState(function (e) {
+        if (PLAYER_STATUS == "") {
             MESSAGE_DOM.classList.remove('win');
             MESSAGE_DOM.classList.remove('lose');
             MESSAGE_DOM.classList.remove('draw');
+            MESSAGE_DOM.innerText = SOME_QOUTES[Math.floor(Math.random() * SOME_QOUTES.length)];
         }
         else {
-            MESSAGE_DOM.classList.add(status);
+            switch (PLAYER_STATUS) {
+                case 'WIN':
+                    MESSAGE_DOM.innerText = 'You won!';
+                    MESSAGE_DOM.classList.add('win');
+                    break;
+                case 'LOSE':
+                    MESSAGE_DOM.innerText = 'You lose!';
+                    MESSAGE_DOM.classList.add('lose');
+                    break;
+                case 'DRAW':
+                    MESSAGE_DOM.innerText = 'Draw!';
+                    MESSAGE_DOM.classList.add('draw');
+                    break;
+            }
+            RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
         }
     }, MESSAGE_DOM), _null_ = _a[0], changeText = _a[1];
-    var HALT = function () {
-        switch (PLAYER_STATUS) {
-            case 'WIN':
-                changeText('You won!', "win");
-                break;
-            case 'LOSE':
-                changeText('You lose!', 'lose');
-                break;
-            case 'DRAW':
-                changeText('Draw!', 'draw');
-                break;
-            default:
-                changeText(SOME_QOUTES[Math.floor(Math.random() * SOME_QOUTES.length)], '');
-        }
-        RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
-    };
     var RESET_FUNCTION = function () {
-        MESSAGE_DOM.classList.remove('win');
-        MESSAGE_DOM.classList.remove('lose');
-        MESSAGE_DOM.classList.remove('draw');
         PLAYER_STATUS = "";
         make_turn(0, BLOCKS_DOM[0], "reset");
-        HALT();
+        changeText();
         AI_DOES_MOVE = true;
     };
     var RESET_BLOCK = function (index) {
@@ -80,34 +76,20 @@ window.addEventListener("DOMContentLoaded", function () {
         });
     };
     var CHECK_STRAIGHT = function (table, challenger) {
-        var wins = [];
-        var _loop_2 = function (straight) {
-            var win = 0;
-            straight.forEach(function (cell) {
-                if (table[cell] == challenger) {
-                    win++;
-                }
-            });
-            if (win === straight.length) {
-                wins.push(straight);
-            }
-        };
-        for (var _i = 0, STRAIGHTS_1 = STRAIGHTS; _i < STRAIGHTS_1.length; _i++) {
-            var straight = STRAIGHTS_1[_i];
-            _loop_2(straight);
-        }
-        return wins;
+        return STRAIGHTS.filter(function (straight) {
+            return straight.filter(function (i) { return table[i] == challenger; }).length == straight.length;
+        });
     };
     var IS_BLOCK_TAKEN = function (index) {
         return BLOCKS_ARRAY()[index] !== void 0;
     };
     var _b = useState(function (current_value, index, element, challenger) {
         if (challenger == "reset")
-            return Array.apply(null, Array(9)).map(function () { return void 0; });
+            return __spreadArray([], FRESH_ARRAY, true);
         var cloned = __spreadArray([], current_value, true);
         cloned[index] = challenger;
         return cloned;
-    }, Array.apply(null, Array(9)).map(function () { return void 0; })), BLOCKS_ARRAY = _b[0], make_turn = _b[1], block_change = _b[2];
+    }, __spreadArray([], FRESH_ARRAY, true)), BLOCKS_ARRAY = _b[0], make_turn = _b[1], block_change = _b[2];
     block_change(function (new_table) {
         for (var index = 0; index < BLOCKS_DOM.length; index++) {
             if (new_table[index] !== void 0) {
@@ -123,7 +105,7 @@ window.addEventListener("DOMContentLoaded", function () {
             console.log("Player wins");
             console.log("Straights: ", res);
             PLAYER_STATUS = "WIN";
-            HALT();
+            changeText();
             return;
         }
         res = CHECK_STRAIGHT(new_table, DOM_CLASS['opponent']);
@@ -132,23 +114,20 @@ window.addEventListener("DOMContentLoaded", function () {
             console.log("AI wins");
             console.log("Straights: ", res);
             PLAYER_STATUS = "LOSE";
-            HALT();
+            changeText();
             return;
         }
         if (new_table.filter(function (x) { return x == void 0; }).length == 0) {
             console.log("No Available Moves");
             PLAYER_STATUS = "DRAW";
-            HALT();
+            changeText();
             return;
         }
     });
     var ENEMY = function () {
-        var available_moves = [];
-        BLOCKS_ARRAY().forEach(function (move, index) {
-            if (move === void 0) {
-                available_moves.push(index);
-            }
-        });
+        var available_moves = BLOCKS_ARRAY().map(function (v, index) {
+            return (v == void 0) ? index : void 0;
+        }).filter(function (k) { return k != void 0; });
         var NAME = DOM_CLASS['opponent'];
         var OPPONENT = DOM_CLASS['player'];
         var check_moves = function (name) {
@@ -162,9 +141,7 @@ window.addEventListener("DOMContentLoaded", function () {
             });
             return result;
         };
-        var random = function (arr) {
-            return Math.floor(Math.random() * arr.length);
-        };
+        var random = function (arr) { return Math.floor(Math.random() * arr.length); };
         var a;
         a = check_moves(NAME);
         if (a.length > 0) {
