@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
     /**
      * WIN, LOSE, DRAW
      * */
-    let PLAYER_STATUS:string = ""
+    let PLAYER_STATUS:string = "";
     
     /**
      * Prevent Making turn when AI does not make any move
