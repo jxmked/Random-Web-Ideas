@@ -116,6 +116,6 @@ function useState(param:any, def?:any){
 
 /**
  * Written By Jovan De Guia
- * Project Name: Copy To Clipboard
+ * Project Name: TypeScript - React Like - useState Function
  * Github: jxmked
  * */
