@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
         [0,3,6], [1,4,7], [2,5,8] // Vertical
     ];
     
-    const FRESH_ARRAY:|undefined[] = Array.apply(null, Array(BLOCKS_DOM.length)).map(() => void 0);
+    const FRESH_ARRAY:undefined[] = Array.apply(null, Array(BLOCKS_DOM.length)).map(() => void 0);
     
     /**
      * WIN, LOSE, DRAW
