@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
     /**
      * WIN, LOSE, DRAW
      * */
-    let PLAYER_STATUS:string = "";
+    const [PLAYER_STATUS, SET_PLAYER_STATUS] = useState("");
     
     /**
      * Prevent Making turn when AI does not make any move
@@ -41,14 +41,14 @@ window.addEventListener("DOMContentLoaded", () => {
     /**
      * Message 
      * */
-    const [_, changeText] = useState((e:HTMLElement) => {
-        if(PLAYER_STATUS == "") {
+    const changeText = useState((e:HTMLElement) => {
+        if(PLAYER_STATUS() == "") {
             MESSAGE_DOM.classList.remove('win');
             MESSAGE_DOM.classList.remove('lose');
             MESSAGE_DOM.classList.remove('draw');
             MESSAGE_DOM.innerText = SOME_QOUTES[Math.floor(Math.random() * SOME_QOUTES.length)];
         } else {
-            switch(PLAYER_STATUS) {
+            switch(PLAYER_STATUS()) {
                 case 'WIN':
                     MESSAGE_DOM.innerText = 'You won!';
                     MESSAGE_DOM.classList.add('win');
@@ -62,16 +62,15 @@ window.addEventListener("DOMContentLoaded", () => {
                     MESSAGE_DOM.classList.add('draw');
                     break;
             }
-            RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
         }
         
-    }, MESSAGE_DOM);
+    }, MESSAGE_DOM)[1];
     
     /**
      * Perform Reset
      * */
     const RESET_FUNCTION:EventListenerOrEventListenerObject = () => {
-        PLAYER_STATUS = "";
+        SET_PLAYER_STATUS("");
         make_turn(0, BLOCKS_DOM[0], "reset");
         changeText();
         AI_DOES_MOVE = true;
@@ -143,7 +142,7 @@ window.addEventListener("DOMContentLoaded", () => {
             // Player Winner
             console.log("Player wins");
             console.log("Straights: ", res);
-            PLAYER_STATUS = "WIN";
+            SET_PLAYER_STATUS("WIN");
             changeText();
             return;
         }
@@ -157,7 +156,7 @@ window.addEventListener("DOMContentLoaded", () => {
             // Opponent Winner
             console.log("AI wins");
             console.log("Straights: ", res);
-            PLAYER_STATUS = "LOSE";
+            SET_PLAYER_STATUS("LOSE");
             changeText();
             return;
         }
@@ -165,7 +164,7 @@ window.addEventListener("DOMContentLoaded", () => {
         if(new_table.filter((x:string) => x == void 0).length == 0) {
             // Draw | No Available Moves
             console.log("No Available Moves");
-            PLAYER_STATUS = "DRAW";
+            SET_PLAYER_STATUS("DRAW");
             changeText();
             return;
         }
@@ -218,16 +217,14 @@ window.addEventListener("DOMContentLoaded", () => {
      * */
     for(let index:number = 0; index < BLOCKS_DOM.length; index++) {
         BLOCKS_DOM[index].addEventListener('click', (evt:Event) => {
-            if(PLAYER_STATUS !== "" || ! AI_DOES_MOVE || IS_BLOCK_TAKEN(index))
+            if(PLAYER_STATUS() !== "" || ! AI_DOES_MOVE || IS_BLOCK_TAKEN(index))
                 return;
             
-            // Prevent Reset button when System Making Turn on each Opponent
-            RESET_BTN_DOM.removeEventListener('click', RESET_FUNCTION, true)
             AI_DOES_MOVE = false
             
             make_turn(index, BLOCKS_DOM[index], PLAYER);
             
-            if(PLAYER_STATUS !== "")
+            if(PLAYER_STATUS() !== "")
                 return;
             
             /**
@@ -238,11 +235,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 
                 make_turn(ai_turn, BLOCKS_DOM[ai_turn], COMPUTER);
                 AI_DOES_MOVE = true;
-                
-                /**
-                 * Re-add event listener
-                 * */
-                RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
             }, 200);
         });
     }

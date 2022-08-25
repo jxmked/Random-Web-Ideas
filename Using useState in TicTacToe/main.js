@@ -29,17 +29,17 @@ window.addEventListener("DOMContentLoaded", function () {
         [0, 3, 6], [1, 4, 7], [2, 5, 8]
     ];
     var FRESH_ARRAY = Array.apply(null, Array(BLOCKS_DOM.length)).map(function () { return void 0; });
-    var PLAYER_STATUS = "";
+    var _a = useState(""), PLAYER_STATUS = _a[0], SET_PLAYER_STATUS = _a[1];
     var AI_DOES_MOVE = true;
-    var _a = useState(function (e) {
-        if (PLAYER_STATUS == "") {
+    var changeText = useState(function (e) {
+        if (PLAYER_STATUS() == "") {
             MESSAGE_DOM.classList.remove('win');
             MESSAGE_DOM.classList.remove('lose');
             MESSAGE_DOM.classList.remove('draw');
             MESSAGE_DOM.innerText = SOME_QOUTES[Math.floor(Math.random() * SOME_QOUTES.length)];
         }
         else {
-            switch (PLAYER_STATUS) {
+            switch (PLAYER_STATUS()) {
                 case 'WIN':
                     MESSAGE_DOM.innerText = 'You won!';
                     MESSAGE_DOM.classList.add('win');
@@ -53,11 +53,10 @@ window.addEventListener("DOMContentLoaded", function () {
                     MESSAGE_DOM.classList.add('draw');
                     break;
             }
-            RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
         }
-    }, MESSAGE_DOM), _ = _a[0], changeText = _a[1];
+    }, MESSAGE_DOM)[1];
     var RESET_FUNCTION = function () {
-        PLAYER_STATUS = "";
+        SET_PLAYER_STATUS("");
         make_turn(0, BLOCKS_DOM[0], "reset");
         changeText();
         AI_DOES_MOVE = true;
@@ -100,7 +99,7 @@ window.addEventListener("DOMContentLoaded", function () {
             res.forEach(function (x) { return HIGHLIGHT_STRAIGHTS(x); });
             console.log("Player wins");
             console.log("Straights: ", res);
-            PLAYER_STATUS = "WIN";
+            SET_PLAYER_STATUS("WIN");
             changeText();
             return;
         }
@@ -109,13 +108,13 @@ window.addEventListener("DOMContentLoaded", function () {
             res.forEach(function (x) { return HIGHLIGHT_STRAIGHTS(x); });
             console.log("AI wins");
             console.log("Straights: ", res);
-            PLAYER_STATUS = "LOSE";
+            SET_PLAYER_STATUS("LOSE");
             changeText();
             return;
         }
         if (new_table.filter(function (x) { return x == void 0; }).length == 0) {
             console.log("No Available Moves");
-            PLAYER_STATUS = "DRAW";
+            SET_PLAYER_STATUS("DRAW");
             changeText();
             return;
         }
@@ -146,18 +145,16 @@ window.addEventListener("DOMContentLoaded", function () {
     };
     var _loop_1 = function (index) {
         BLOCKS_DOM[index].addEventListener('click', function (evt) {
-            if (PLAYER_STATUS !== "" || !AI_DOES_MOVE || IS_BLOCK_TAKEN(index))
+            if (PLAYER_STATUS() !== "" || !AI_DOES_MOVE || IS_BLOCK_TAKEN(index))
                 return;
-            RESET_BTN_DOM.removeEventListener('click', RESET_FUNCTION, true);
             AI_DOES_MOVE = false;
             make_turn(index, BLOCKS_DOM[index], PLAYER);
-            if (PLAYER_STATUS !== "")
+            if (PLAYER_STATUS() !== "")
                 return;
             window.setTimeout(function () {
                 var ai_turn = ENEMY();
                 make_turn(ai_turn, BLOCKS_DOM[ai_turn], COMPUTER);
                 AI_DOES_MOVE = true;
-                RESET_BTN_DOM.addEventListener('click', RESET_FUNCTION, true);
             }, 200);
         });
     };
