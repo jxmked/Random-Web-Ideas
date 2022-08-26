@@ -191,7 +191,11 @@ window.addEventListener("DOMContentLoaded", () => {
             });
         };
         
-        const random:Function = (arr:number[]) => Math.floor(Math.random() * arr.length);
+        const random:Function = (arr:number[]) => {
+            if(arr.length < 2)
+                return arr.length - 1;
+            return Math.floor(Math.random() * arr.length);
+        };
         
         let a:number[];
         

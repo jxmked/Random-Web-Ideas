@@ -130,7 +130,11 @@ window.addEventListener("DOMContentLoaded", function () {
                 return CHECK_STRAIGHT(test, name).length > 0;
             });
         };
-        var random = function (arr) { return Math.floor(Math.random() * arr.length); };
+        var random = function (arr) {
+            if (arr.length < 2)
+                return arr.length - 1;
+            return Math.floor(Math.random() * arr.length);
+        };
         var a;
         a = check_moves(COMPUTER);
         if (a.length > 0) {
