@@ -7,6 +7,8 @@ class HoldButton {
     __userdata;
     __element;
     constructor(element) {
+        if (element instanceof Element)
+            throw new TypeError("HoldButton requires DOM element");
         this.__has = {
             "onhold": false,
             "onunhold": false
@@ -81,85 +83,4 @@ class HoldButton {
         return this;
     }
 }
-const canvas = document.getElementById("canvas");
-const btn = {
-    left: document.getElementById("left"),
-    right: document.getElementById("right"),
-    up: document.getElementById("up"),
-    down: document.getElementById("down"),
-    upLeft: document.getElementById("up-left"),
-    upRight: document.getElementById("up-right"),
-    downLeft: document.getElementById("down-left"),
-    downRight: document.getElementById("down-right")
-};
-const ctx = canvas.getContext('2d');
-const currentPos = {
-    w: 0,
-    h: 0
-};
-const speed = 5;
-const size = 30;
-const rapidTrigger = 1;
-const isOutline = false;
-const reboundBounce = 20;
-function triangle(x, y) {
-    const { width, height } = canvas;
-    ctx.clearRect(0, 0, width, height);
-    let { w, h } = currentPos;
-    w += x;
-    h += y;
-    if (w <= 0 + size)
-        w = (0 + size) + reboundBounce;
-    else if (w >= width - size)
-        w = (width - size) - reboundBounce;
-    if (h <= 0)
-        h = 0 + reboundBounce;
-    else if (h >= height - (size * 2))
-        h = (height - (size * 2)) - reboundBounce;
-    ctx.beginPath();
-    ctx.moveTo(w, h);
-    ctx.lineTo(w + size, h + (size * 2));
-    ctx.lineTo(w - size, h + (size * 2));
-    ctx.closePath();
-    if (isOutline) {
-        ctx.strokeStyle = "blue";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-    }
-    else {
-        ctx.fillStyle = "blue";
-        ctx.fill();
-    }
-    currentPos.w = w;
-    currentPos.h = h;
-}
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth * 2;
-    canvas.height = window.innerHeight * 2;
-    currentPos.w = Math.abs(canvas.width / 2);
-    currentPos.h = Math.abs(canvas.height / 2) - Math.ceil(size / 2);
-    triangle(0, 0);
-});
-window.dispatchEvent(new Event('resize'));
-function Start(data) {
-    data["ival"] = setInterval(() => {
-        data["main"]();
-    }, rapidTrigger);
-}
-function Stop(data) {
-    clearInterval(data["ival"]);
-}
-const factory = (e, x, y) => {
-    e.onClick(() => triangle(x, y));
-    e.onHold(Start, 400);
-    e.onUnHold(Stop);
-};
-factory(new HoldButton(btn.up), 0, -speed);
-factory(new HoldButton(btn.down), 0, speed);
-factory(new HoldButton(btn.left), -speed, 0);
-factory(new HoldButton(btn.right), speed, 0);
-factory(new HoldButton(btn.upLeft), -speed, -speed);
-factory(new HoldButton(btn.upRight), speed, -speed);
-factory(new HoldButton(btn.downLeft), -speed, speed);
-factory(new HoldButton(btn.downRight), speed, speed);
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=button.js.map
