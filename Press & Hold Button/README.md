@@ -6,6 +6,8 @@
 
 [Live Demo](https://jxmked.github.io/Random-Web-Ideas/Press%20%26%20Hold%20Button/)
 
+[Timelapse Video](https://youtu.be/yPidAKkskVQ?si=Sz3fkClzFnUubbEG)
+
 ---
 
 #### Written by Jovan De Guia
