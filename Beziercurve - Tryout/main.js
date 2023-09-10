@@ -21,6 +21,8 @@ const P2 = new Coor_button(
   "#ff00ff",
 );
 
+const pointObject = [P1, P2];
+
 canvas.width = (size.w * 300) / resolution;
 canvas.height = (size.h * 300) / resolution;
 
@@ -60,9 +62,8 @@ function insertTimeMap(t, a, b) {
   // remove elements from after 50 nodes
   while (timeMap.childNodes.length > 50) {
     try {
-      timeMap.removeChild(timeMap.childNodes[59]);
+      timeMap.removeChild(timeMap.childNodes[50]);
     } catch (err) {
-      console.log(err);
       break;
     }
   }
@@ -117,54 +118,63 @@ function loop() {
   ctx.strokeStyle = "#00ff00";
   ctx.stroke();
 
-  P1.update();
-  P2.update();
-  P1.display(ctx);
-  P2.display(ctx);
+  for (const po of pointObject) {
+    po.update();
+    po.display(ctx);
+  }
 
   window.requestAnimationFrame(loop);
 }
 
 loop();
 
-const last_coor = [
-  { x: 0, y: 0 },
-  { x: 0, y: 0 },
-];
-
-canvas.addEventListener("touchstart", function (evt) {
+/**
+ * Added some multi touch support
+ * */
+function eventDown(evt) {
   evt.preventDefault();
 
-  const { clientX, clientY } = evt.touches[0];
+  for (const { clientX, clientY, identifier } of evt.touches) {
+    const x = translatedX(canvas, clientX);
+    const y = translatedY(canvas, clientY);
 
-  last_coor[0].x = translatedX(canvas, clientX);
-  last_coor[0].y = translatedY(canvas, clientY);
+    for (const po of pointObject) {
+      po.onTouchStart({ x, y }, identifier);
+    }
+  }
+}
 
-  last_coor[1].x = translatedX(canvas, clientX);
-  last_coor[1].y = translatedY(canvas, clientY);
-
-  P1.onTouchStart(last_coor[0]);
-  P2.onTouchStart(last_coor[1]);
-});
-
-canvas.addEventListener("touchmove", function (evt) {
+function eventMove(evt) {
   evt.preventDefault();
 
-  const { clientX, clientY } = evt.touches[0];
+  for (const { clientX, clientY, identifier } of evt.touches) {
+    const x = translatedX(canvas, clientX);
+    const y = translatedY(canvas, clientY);
 
-  last_coor[0].x = translatedX(canvas, clientX);
-  last_coor[0].y = translatedY(canvas, clientY);
+    for (const po of pointObject) {
+      po.onTouchMove({ x, y }, identifier);
+    }
+  }
+}
 
-  last_coor[1].x = translatedX(canvas, clientX);
-  last_coor[1].y = translatedY(canvas, clientY);
-
-  P1.onTouchMove(last_coor[0]);
-  P2.onTouchMove(last_coor[1]);
-});
-
-canvas.addEventListener("touchend", function (evt) {
+function eventUp(evt) {
   evt.preventDefault();
 
-  P1.onTouchEnd(last_coor[0]);
-  P2.onTouchEnd(last_coor[1]);
-});
+  const working_ids = new Array(evt.touches.length)
+    .fill(0)
+    .map(function (e, i) {
+      return evt.touches[i].identifier;
+    });
+
+  for (const po of pointObject) {
+    if (po.registered_id in working_ids) continue;
+
+    po.onTouchEnd({ x: 0, y: 0 });
+  }
+}
+
+canvas.addEventListener("touchstart", eventDown);
+canvas.addEventListener("touchmove", eventMove);
+canvas.addEventListener("touchend", eventUp);
+
+// I will try to add click event later...

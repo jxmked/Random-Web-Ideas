@@ -7,10 +7,6 @@ class Coor_button extends Canvas_Button {
     this.position = pos;
   }
 
-  onTouchEnd({ x, y }) {
-    this.does_start_at_the_element = false;
-  }
-
   update(time = 0) {
     this.translate(this.c_touch);
   }

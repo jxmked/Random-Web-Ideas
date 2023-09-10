@@ -20,6 +20,7 @@ class Canvas_Button {
     this.does_start_at_the_element = false;
     this.element_size = element_size;
     this.position = { x: 0, y: 0 };
+    this.registered_id = null;
   }
 
   /**
@@ -42,23 +43,27 @@ class Canvas_Button {
     return true;
   }
 
-  onTouchStart({ x, y }) {
+  onTouchStart({ x, y }, id) {
     if (!this._is_within({ x, y })) return;
+    if (this.registered_id !== null) return;
 
     this.does_start_at_the_element = true;
 
+    this.registered_id = id;
+
     this.c_touch = { x, y };
   }
 
-  onTouchMove({ x, y }) {
+  onTouchMove({ x, y }, id) {
     if (!this.does_start_at_the_element) return;
+    if (id !== this.registered_id) return;
+
     this.c_touch = { x, y };
   }
 
-  onTouchEnd({ x, y }) {
-    this.does_start_at_the_element + false;
-
-    this.c_touch = { x, y };
+  onTouchEnd({ x, y }, id) {
+    this.does_start_at_the_element = false;
+    this.registered_id = null;
   }
 
   update(time = 0) {
