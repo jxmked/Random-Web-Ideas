@@ -2,7 +2,7 @@
 
 [Live Demo](https://jxmked.github.io/Random-Web-Ideas/Toggle%20-%20Lever%20-%20v1/)
 
-----
+---
 
 #### Written by Jovan De Guia
 

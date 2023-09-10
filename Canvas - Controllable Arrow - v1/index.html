@@ -1,85 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, width=device-width">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title></title>
     <style>
-    body {
+      body {
         margin: 0;
         padding: 0;
-    }
-    
-    canvas {
+      }
+
+      canvas {
         padding: 0;
         margin: 0;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-    }
-    
-    #up {
+      }
+
+      #up {
         grid-area: bu;
-    }
-    
-    #down {
+      }
+
+      #down {
         grid-area: bd;
-    }
-    
-    #left {
+      }
+
+      #left {
         grid-area: bl;
-    }
-    
-    #right {
+      }
+
+      #right {
         grid-area: br;
-    }
-    #up-left {
+      }
+      #up-left {
         grid-area: bul;
-    }
-    #up-right {
+      }
+      #up-right {
         grid-area: bur;
-    }
-    #down-left {
+      }
+      #down-left {
         grid-area: bdl;
-    }
-    #down-right {
+      }
+      #down-right {
         grid-area: bdr;
-    }
-    
-    #buttons  {
+      }
+
+      #buttons {
         position: absolute;
         bottom: 100px;
         left: 50%;
         transform: translateX(-50%);
         width: 70%;
         height: 100px;
-        
+
         display: grid;
-        
+
         grid-template-columns: repeat(3, 1fr);
         grid-auto-rows: minmax(50px, auto);
-        grid-template-areas: 
-            "bul bu bur"
-            "bl . br"
-            "bdl bd bdr";
+        grid-template-areas:
+          "bul bu bur"
+          "bl . br"
+          "bdl bd bdr";
         gap: 5px;
-    }
-    
+      }
     </style>
-</head>
-<body>
-    
+  </head>
+  <body>
     <div id="buttons">
-        <button id="up">Up</button>
-        <button id="down">Down</button>
-        <button id="up-left">Up-Left</button>
-        <button id="up-right">Up-Right</button>
-        <button id="left">Left</button>
-        <button id="right">Right</button>
-        <button id="down-left">Down-Left</button>
-        <button id="down-right">Down-Right</button>
+      <button id="up">Up</button>
+      <button id="down">Down</button>
+      <button id="up-left">Up-Left</button>
+      <button id="up-right">Up-Right</button>
+      <button id="left">Left</button>
+      <button id="right">Right</button>
+      <button id="down-left">Down-Left</button>
+      <button id="down-right">Down-Right</button>
     </div>
     <canvas id="canvas"></canvas>
-    <script type="text/javascript" src="index.js" defer ></script>
-</body>
+    <script type="text/javascript" src="index.js" defer></script>
+  </body>
 </html>

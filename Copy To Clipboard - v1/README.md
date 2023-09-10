@@ -2,7 +2,7 @@
 
 [Live Demo](https://jxmked.github.io/Random-Web-Ideas/Copy%20To%20Clipboard%20-%20v1/)
 
-----
+---
 
 #### Written by Jovan De Guia
 

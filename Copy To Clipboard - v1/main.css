@@ -31,8 +31,12 @@ body > .header h3 {
   transform: translate(-50%, -50%);
 }
 
-button, button:before, button:after,
-input, input:before, input:after {
+button,
+button:before,
+button:after,
+input,
+input:before,
+input:after {
   background-color: #f2f2f7;
   color: #444446;
 }
@@ -64,8 +68,12 @@ input[type="number"] {
   border-bottom: 1px solid;
   border-color: #363638;
 }
-.container > .panel > h1, .container > .panel > h2, .container > .panel > h3,
-.container > .panel > h4, .container > .panel > h5, .container > .panel > h6 {
+.container > .panel > h1,
+.container > .panel > h2,
+.container > .panel > h3,
+.container > .panel > h4,
+.container > .panel > h5,
+.container > .panel > h6 {
   display: block;
   font-size: initial;
 }
@@ -113,7 +121,8 @@ input[type="number"] {
   border-radius: 0 0 10px 10px;
   border-color: #363638;
 }
-.panel > div > button:before, .panel > div > button:after {
+.panel > div > button:before,
+.panel > div > button:after {
   display: none;
 }
 .panel > div > button > span {

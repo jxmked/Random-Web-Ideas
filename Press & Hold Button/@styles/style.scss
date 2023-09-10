@@ -1,128 +1,129 @@
 .panel {
-    // Remove Whitespaces between Elements
-    white-space: nowrap;
-    font-size: 0;
-    
-    input,
+  // Remove Whitespaces between Elements
+  white-space: nowrap;
+  font-size: 0;
+
+  input,
+  button {
+    text-align: center !important;
+    font-size: 1.2rem !important;
+  }
+
+  // Increasing and Decreasing value from input
+  &:first-child {
+    > h3 {
+      font-size: 12px !important;
+    }
+
+    .items {
+      #num {
+        // The Input
+        width: 40px;
+        border: none;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+        border-color: $border-color;
+      }
+
+      button {
+        border: 1px solid;
+        border-color: $border-color;
+
+        &:first-child {
+          border-radius: 7px 0 0 7px;
+        }
+
+        &:last-child {
+          border-radius: 0 7px 7px 0;
+        }
+
+        &:before,
+        &:after {
+          content: "";
+        }
+
+        // Events
+        &:hover {
+          background-color: rgb(229, 229, 214);
+        }
+
+        &:active {
+          background-color: rgb(174, 174, 178);
+          border: 1px solid rgb(99, 99, 102);
+        }
+      }
+    }
+  }
+
+  // Press and Hold
+  &:last-child {
+    > h3 {
+      font-size: 15px !important;
+    }
+
+    .hidden {
+      display: none;
+      visibility: hidden;
+    }
+
     button {
-        text-align: center !important;
-        font-size: 1.2rem !important;
+      border-radius: 7px;
+      border: 1px solid;
+      border-color: $border-color;
+
+      &:before,
+      &:after {
+        content: "";
+      }
+
+      // Events
+      &:hover {
+        background-color: rgb(229, 229, 214);
+      }
+
+      &:active {
+        background-color: rgb(174, 174, 178);
+        border: 1px solid rgb(99, 99, 102);
+      }
     }
-    
-    // Increasing and Decreasing value from input 
-    &:first-child {
-        > h3 {
-            font-size: 12px !important;
-        }
-        
-        .items {
-            #num { // The Input
-                width: 40px;
-                border: none;
-                border-top: 1px solid;
-                border-bottom: 1px solid;
-                border-color: $border-color;
-            }
-            
-            button {
-                border: 1px solid;
-                border-color: $border-color;
-                
-                &:first-child {
-                    border-radius: 7px 0 0 7px;
-                }
-                
-                &:last-child {
-                    border-radius: 0 7px 7px 0;
-                }
-                
-                &:before,
-                &:after {
-                    content: '';
-                }
-                
-                // Events
-                &:hover {
-                    background-color: rgb(229, 229, 214);
-                }
-                
-                &:active {
-                    background-color: rgb(174, 174, 178);
-                    border: 1px solid rgb(99, 99, 102);
-                }
-            }
-        }
+
+    // Main Button
+    #hold_button {
+      padding: 3px 5px;
     }
-    
-    // Press and Hold
-    &:last-child {
-        > h3 {
-            font-size: 15px !important;
+
+    // Modal Popup
+    #hold_modal {
+      height: 20rem;
+      width: 20rem;
+      background-color: rgba(174, 174, 178, 0.3);
+      overflow: break;
+      backdrop-filter: blur(5px);
+
+      @extend %center-center;
+
+      // Modal Close Button
+      > #hold_modal_close {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+      }
+
+      // Modal Popup text content
+      > div {
+        font-size: 1.4rem;
+
+        @extend %center-center;
+
+        > span {
+          white-space: initial;
+          height: auto;
+          width: 15rem;
+          display: inline-block;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
         }
-        
-        .hidden {
-            display: none;
-            visibility: hidden;
-        }
-        
-        button {
-            border-radius: 7px;
-            border: 1px solid;
-            border-color: $border-color;
-            
-            &:before,
-            &:after {
-                content: '';
-            }
-        
-            // Events
-            &:hover {
-                background-color: rgb(229, 229, 214);
-            }
-        
-            &:active {
-                background-color: rgb(174, 174, 178);
-                border: 1px solid rgb(99, 99, 102);
-            }
-        }
-        
-        // Main Button
-        #hold_button {
-            padding: 3px 5px;
-        }
-        
-        // Modal Popup
-        #hold_modal {
-            height: 20rem;
-            width: 20rem;
-            background-color: rgba(174, 174, 178, 0.3);
-            overflow: break;
-            backdrop-filter: blur(5px);
-        
-            @extend %center-center;
-            
-            // Modal Close Button
-            > #hold_modal_close {
-                position: absolute;
-                right: 5px;
-                top: 5px;
-            }
-            
-            // Modal Popup text content
-            > div {
-                font-size: 1.4rem;
-                
-                @extend %center-center;
-                
-                > span {
-                    white-space: initial;
-                    height: auto;
-                    width: 15rem;
-                    display: inline-block;
-                    overflow-wrap: break-word;
-                    word-wrap: break-word;
-                }
-            }
-        }
+      }
     }
+  }
 }

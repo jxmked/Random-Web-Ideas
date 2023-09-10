@@ -1,6 +1,6 @@
 # Just a thing
 
-----
+---
 
 #### Written by Jovan De Guia
 

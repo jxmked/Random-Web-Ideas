@@ -76,4 +76,5 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$max-width\".\A         on line 5 of ../__assets__/header.scss\A         from line 2 of @styles/main.scss\A \A 1: \A 2: @import \"../../__assets__/header.scss\";\A 3: @import \"../../__assets__/container.scss\";\A 4: @import \"style.scss\";\A 5: @import \"../../__assets__/footer.scss\";"; }
+  content: 'Error: Undefined variable: "$max-width".\A         on line 5 of ../__assets__/header.scss\A         from line 2 of @styles/main.scss\A \A 1: \A 2: @import "../../__assets__/header.scss";\A 3: @import "../../__assets__/container.scss";\A 4: @import "style.scss";\A 5: @import "../../__assets__/footer.scss";';
+}

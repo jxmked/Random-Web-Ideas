@@ -1,109 +1,109 @@
 .container {
-    width: 80vw;
-    height: auto;
-    //padding: 0;
+  width: 80vw;
+  height: auto;
+  //padding: 0;
 }
 .panel {
-    margin: auto;
+  margin: auto;
+  box-sizing: border-box;
+  width: 95%;
+  height: auto;
+
+  #message-board {
+    width: 90%;
+    height: 40px;
+    text-align: center;
+    color: $text-color;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 3px;
+    margin-left: auto;
+    margin-right: auto;
     box-sizing: border-box;
-    width: 95%;
-    height: auto;
-    
-    #message-board {
-        width: 90%;
-        height: 40px;
-        text-align: center;
-        color: $text-color;
-        font-size: 1rem;
-        font-weight: 500;
-        letter-spacing: 3px;
-        margin-left: auto;
-        margin-right: auto;
-        box-sizing: border-box;
-        background-color: rgb(242, 242, 247);
-        
-        #message-text {
-            width: 100%;
-            margin: auto;
-            padding: 4px 5px;
-            &.win {
-                background-color: rgb(49, 222, 75);
-                color: rgb(242, 242, 247);
-            }
-            &.lose {
-                background-color: rgb(255, 65, 54);
-                color: rgb(242, 242, 247);
-            }
-            &.draw {
-                
-            }
-        }
+    background-color: rgb(242, 242, 247);
+
+    #message-text {
+      width: 100%;
+      margin: auto;
+      padding: 4px 5px;
+      &.win {
+        background-color: rgb(49, 222, 75);
+        color: rgb(242, 242, 247);
+      }
+      &.lose {
+        background-color: rgb(255, 65, 54);
+        color: rgb(242, 242, 247);
+      }
+      &.draw {
+      }
     }
-    
-    > div.panel-board {
-        width: min(100%, 500px);
-        height: min(75vw, 500px);
-        margin: auto;
-        padding: 0;
-        
-        > #main-board {
-            width: 80%;
-            height: 80%;
-            border: none;
-            max-width: $max-width;
-            max-height: $max-width;
-            border-spacing: 5px;
-            margin: auto;
-            
-            tr {
-                border: 1px solid $border-color;
-                td.blocks {
-                    width: min(33.3333%, 80px);
-                    border-radius: 50%;
-                    height: 80px;
-                    border: 1px solid $border-color;
-                    
-                    &:hover,
-                    &.player,
-                    &.opponent,
-                    &.striked {
-                        border-color: transparent;
-                    }
-                    
-                    &:hover {
-                        // Default - Light - Gray 5
-                        background-color: rgb(229,229, 234);
-                    }
-                    
-                    &.player {
-                        // Accesible - Dark - Blue
-                        background-color: rgb(64, 156, 255);
-                    }
-                    
-                    &.opponent {
-                        //Accesible - Dark - Pink
-                        background-color: rgb(255, 100, 130);
-                    }
-                    
-                    &.striked {
-                        // Accesible - Dark - Green
-                        background-color: rgb(207, 181, 59);
-                    }
-                }
-            }
+  }
+
+  > div.panel-board {
+    width: min(100%, 500px);
+    height: min(75vw, 500px);
+    margin: auto;
+    padding: 0;
+
+    > #main-board {
+      width: 80%;
+      height: 80%;
+      border: none;
+      max-width: $max-width;
+      max-height: $max-width;
+      border-spacing: 5px;
+      margin: auto;
+
+      tr {
+        border: 1px solid $border-color;
+        td.blocks {
+          width: min(33.3333%, 80px);
+          border-radius: 50%;
+          height: 80px;
+          border: 1px solid $border-color;
+
+          &:hover,
+          &.player,
+          &.opponent,
+          &.striked {
+            border-color: transparent;
+          }
+
+          &:hover {
+            // Default - Light - Gray 5
+            background-color: rgb(229, 229, 234);
+          }
+
+          &.player {
+            // Accesible - Dark - Blue
+            background-color: rgb(64, 156, 255);
+          }
+
+          &.opponent {
+            //Accesible - Dark - Pink
+            background-color: rgb(255, 100, 130);
+          }
+
+          &.striked {
+            // Accesible - Dark - Green
+            background-color: rgb(207, 181, 59);
+          }
         }
+      }
     }
-    
-    
-    > div.panel-reset {
-        > button, button:before, button:after {
-            width: 50%;
-            background-color: transparent;
-            border: 1px solid $border-color;
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            font-weight: 500;
-            border-radius: 14px;
-        }
+  }
+
+  > div.panel-reset {
+    > button,
+    button:before,
+    button:after {
+      width: 50%;
+      background-color: transparent;
+      border: 1px solid $border-color;
+      font-size: 1.2rem;
+      letter-spacing: 3px;
+      font-weight: 500;
+      border-radius: 14px;
     }
+  }
 }

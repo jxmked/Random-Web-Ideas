@@ -1,77 +1,91 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="charset" content="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-        <meta name="theme-color" content="#636366">
-        <meta name="color-scheme" content="dark light">
-        <meta name="description" content="useState Demo">
-        <meta name="keywords" content="usestate,typescript,javascript">
-        <meta name="robots" content="index,follow">
-        <meta name="referrer" content="origin">
-        <link rel="icon" href="favicon.ico" />
-        <title>React-like useState Function &dash; xCreation</title>
-        <link rel="stylesheet" href="main.css">
-    </head>
-    <body>
-        <div class="header">
-            <h3>TicTacToe using useState</h3>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="charset" content="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <meta name="theme-color" content="#636366" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content="useState Demo" />
+    <meta name="keywords" content="usestate,typescript,javascript" />
+    <meta name="robots" content="index,follow" />
+    <meta name="referrer" content="origin" />
+    <link rel="icon" href="favicon.ico" />
+    <title>React-like useState Function &dash; xCreation</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h3>TicTacToe using useState</h3>
+    </div>
+    <div class="container">
+      <div class="panel">
+        <div id="message-board">
+          <!-- Message Board -->
+          <div>
+            <span id="message-text">Game start</span>
+            <!-- Some Message -->
+          </div>
         </div>
-        <div class="container">
-            <div class="panel">
-                
-                <div id="message-board"> <!-- Message Board -->
-                    <div>
-                        <span id="message-text">Game start</span> <!-- Some Message -->
-                    </div>
-                </div>
-                
-                <div class="panel-board">
-                    <!-- Main Board -->
-                    <table id="main-board">
-                        <tr>
-                            <td class="blocks"></td>
-                            <td class="blocks"></td>
-                            <td class="blocks"></td>
-                        </tr>
-                        <tr>
-                            <td class="blocks"></td>
-                            <td class="blocks"></td>
-                            <td class="blocks"></td>
-                        </tr>
-                        <tr>
-                            <td class="blocks"></td>
-                            <td class="blocks"></td>
-                            <td class="blocks"></td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <div class="panel-reset"> <!-- Reset Button -->
-                    <button id="reset-btn">Reset</button>
-                </div>
-            </div>
+
+        <div class="panel-board">
+          <!-- Main Board -->
+          <table id="main-board">
+            <tr>
+              <td class="blocks"></td>
+              <td class="blocks"></td>
+              <td class="blocks"></td>
+            </tr>
+            <tr>
+              <td class="blocks"></td>
+              <td class="blocks"></td>
+              <td class="blocks"></td>
+            </tr>
+            <tr>
+              <td class="blocks"></td>
+              <td class="blocks"></td>
+              <td class="blocks"></td>
+            </tr>
+          </table>
         </div>
-    </body>
-    <script type="text/javascript" src="main.js" defer></script>
-    <footer>
-        <div>
-            <span>
-                <a href="https://github.com/jxmked/Random-Web-Ideas/tree/xio/Using%20useState%20in%20TicTacToe">Github Repository</a>
-            </span>
+
+        <div class="panel-reset">
+          <!-- Reset Button -->
+          <button id="reset-btn">Reset</button>
         </div>
-        <div>
-            <label for="developer">
-                <span>Developer: </span>
-                <span><a href="https://www.facebook.com/deguia25"><b>Jovan De Guia</b></a></span>
-            </label>
-            <label for="socials">
-                <span>Github: <a href="https://github.com/jxmked"><b>jxmked</b></a></span>
-            </label>
-            <label for="copyright">
-                <span><b>xCreation</b>&nbsp;|&nbsp;<b>&copy;2022</b></span>
-            </label>
-        </div>
-    </footer>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="main.js" defer></script>
+  <footer>
+    <div>
+      <span>
+        <a
+          href="https://github.com/jxmked/Random-Web-Ideas/tree/xio/Using%20useState%20in%20TicTacToe"
+          >Github Repository</a
+        >
+      </span>
+    </div>
+    <div>
+      <label for="developer">
+        <span>Developer: </span>
+        <span
+          ><a href="https://www.facebook.com/deguia25"
+            ><b>Jovan De Guia</b></a
+          ></span
+        >
+      </label>
+      <label for="socials">
+        <span
+          >Github: <a href="https://github.com/jxmked"><b>jxmked</b></a></span
+        >
+      </label>
+      <label for="copyright">
+        <span><b>xCreation</b>&nbsp;|&nbsp;<b>&copy;2022</b></span>
+      </label>
+    </div>
+  </footer>
 </html>

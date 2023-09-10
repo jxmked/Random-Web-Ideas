@@ -1,0 +1,1 @@
+class MethodNotImplemented extends Error {}

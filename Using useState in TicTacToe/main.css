@@ -31,8 +31,12 @@ body > .header h3 {
   transform: translate(-50%, -50%);
 }
 
-button, button:before, button:after,
-input, input:before, input:after {
+button,
+button:before,
+button:after,
+input,
+input:before,
+input:after {
   background-color: #f2f2f7;
   color: #444446;
 }
@@ -64,8 +68,12 @@ input[type="number"] {
   border-bottom: 1px solid;
   border-color: #363638;
 }
-.container > .panel > h1, .container > .panel > h2, .container > .panel > h3,
-.container > .panel > h4, .container > .panel > h5, .container > .panel > h6 {
+.container > .panel > h1,
+.container > .panel > h2,
+.container > .panel > h3,
+.container > .panel > h4,
+.container > .panel > h5,
+.container > .panel > h6 {
   display: block;
   font-size: initial;
 }
@@ -131,7 +139,10 @@ input[type="number"] {
   height: 80px;
   border: 1px solid #363638;
 }
-.panel > div.panel-board > #main-board tr td.blocks:hover, .panel > div.panel-board > #main-board tr td.blocks.player, .panel > div.panel-board > #main-board tr td.blocks.opponent, .panel > div.panel-board > #main-board tr td.blocks.striked {
+.panel > div.panel-board > #main-board tr td.blocks:hover,
+.panel > div.panel-board > #main-board tr td.blocks.player,
+.panel > div.panel-board > #main-board tr td.blocks.opponent,
+.panel > div.panel-board > #main-board tr td.blocks.striked {
   border-color: transparent;
 }
 .panel > div.panel-board > #main-board tr td.blocks:hover {
@@ -146,7 +157,9 @@ input[type="number"] {
 .panel > div.panel-board > #main-board tr td.blocks.striked {
   background-color: #cfb53b;
 }
-.panel > div.panel-reset > button, .panel > div.panel-reset button:before, .panel > div.panel-reset button:after {
+.panel > div.panel-reset > button,
+.panel > div.panel-reset button:before,
+.panel > div.panel-reset button:after {
   width: 50%;
   background-color: transparent;
   border: 1px solid #363638;

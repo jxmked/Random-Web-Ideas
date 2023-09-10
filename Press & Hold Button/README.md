@@ -1,12 +1,12 @@
 # Press & Hold Button
 
-***Javascript Press and Hold Feature For Web UI***
+**_Javascript Press and Hold Feature For Web UI_**
 
 > With this JavaScript function, we can implement press and hold feature in Web UIs.
 
 [Live Demo](https://jxmked.github.io/Random-Web-Ideas/Press%20%26%20Hold%20Button/)
 
-----
+---
 
 #### Written by Jovan De Guia
 
