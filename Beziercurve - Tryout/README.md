@@ -5,6 +5,5 @@ JavaScript Canvas. This is folder may contain unusual code
 since it is written with a free and limited time.
 
 
-https://jxmked.github.io/Random-Web-Ideas/Beziercurve - Tryout/
-
+[Live Demo](https://jxmked.github.io/Random-Web-Ideas/Beziercurve - Tryout/)
 
