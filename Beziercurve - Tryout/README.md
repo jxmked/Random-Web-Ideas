@@ -6,6 +6,10 @@ since it is written with a free and limited time.
 
 [Live Demo](https://jxmked.github.io/Random-Web-Ideas/Beziercurve%20-%20Tryout/)
 
+
+[Timelapse Video](https://youtu.be/yPidAKkskVQ?si=Sz3fkClzFnUubbEG)
+
+
 ---
 
 #### Written by Jovan De Guia
