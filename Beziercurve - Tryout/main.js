@@ -177,9 +177,7 @@ canvas.addEventListener("touchstart", eventDown);
 canvas.addEventListener("touchmove", eventMove);
 canvas.addEventListener("touchend", eventUp);
 
-
-
-canvas.addEventListener("mousedown", function(evt){
+canvas.addEventListener("mousedown", function (evt) {
   const { clientX, clientY } = evt;
 
   const x = translatedX(canvas, clientX);
@@ -188,10 +186,9 @@ canvas.addEventListener("mousedown", function(evt){
   for (const po of pointObject) {
     po.onTouchStart({ x, y }, 0);
   }
-
 });
 
-canvas.addEventListener("mousemove", function(evt){
+canvas.addEventListener("mousemove", function (evt) {
   const { clientX, clientY } = evt;
 
   const x = translatedX(canvas, clientX);
@@ -200,13 +197,10 @@ canvas.addEventListener("mousemove", function(evt){
   for (const po of pointObject) {
     po.onTouchMove({ x, y }, 0);
   }
-
 });
 
-canvas.addEventListener("mouseup", function(evt){
-
+canvas.addEventListener("mouseup", function (evt) {
   for (const po of pointObject) {
-    po.onTouchEnd({ x:0, y : 0});
+    po.onTouchEnd({ x: 0, y: 0 });
   }
-
 });
