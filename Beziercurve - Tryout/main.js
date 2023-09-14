@@ -177,4 +177,36 @@ canvas.addEventListener("touchstart", eventDown);
 canvas.addEventListener("touchmove", eventMove);
 canvas.addEventListener("touchend", eventUp);
 
-// I will try to add click event later...
+
+
+canvas.addEventListener("mousedown", function(evt){
+  const { clientX, clientY } = evt;
+
+  const x = translatedX(canvas, clientX);
+  const y = translatedY(canvas, clientY);
+
+  for (const po of pointObject) {
+    po.onTouchStart({ x, y }, 0);
+  }
+
+});
+
+canvas.addEventListener("mousemove", function(evt){
+  const { clientX, clientY } = evt;
+
+  const x = translatedX(canvas, clientX);
+  const y = translatedY(canvas, clientY);
+
+  for (const po of pointObject) {
+    po.onTouchMove({ x, y }, 0);
+  }
+
+});
+
+canvas.addEventListener("mouseup", function(evt){
+
+  for (const po of pointObject) {
+    po.onTouchEnd({ x:0, y : 0});
+  }
+
+});
