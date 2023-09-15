@@ -33,14 +33,6 @@ function clearCtx() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function move(x, y) {
-  ctx.moveTo(x, y);
-}
-
-function line(x, y) {
-  ctx.lineTo(x, y);
-}
-
 function flip_range(min, max, value) {
   return max - (value - min);
 }
@@ -109,9 +101,9 @@ function loop() {
     const coor = quadraticBezier(t / 100, sPos, Pa, Pb, ePos);
 
     if (t <= 0) {
-      move(canvas.width * coor.x, canvas.height * coor.y);
+      ctx.moveTo(canvas.width * coor.x, canvas.height * coor.y);
     } else {
-      line(canvas.width * coor.x, canvas.height * coor.y);
+      ctx.lineTo(canvas.width * coor.x, canvas.height * coor.y);
     }
   }
 
@@ -140,6 +132,10 @@ function eventDown(evt) {
 
     for (const po of pointObject) {
       po.onTouchStart({ x, y }, identifier);
+
+      // Preventing all movable object to be moved
+      // by a single identifier
+      if (identifier === po.registered_id) break;
     }
   }
 }
@@ -169,7 +165,7 @@ function eventUp(evt) {
   for (const po of pointObject) {
     if (po.registered_id in working_ids) continue;
 
-    po.onTouchEnd({ x: 0, y: 0 });
+    po.onTouchEnd({ x: 0, y: 0 }, po.registered_id);
   }
 }
 
@@ -201,6 +197,6 @@ canvas.addEventListener("mousemove", function (evt) {
 
 canvas.addEventListener("mouseup", function (evt) {
   for (const po of pointObject) {
-    po.onTouchEnd({ x: 0, y: 0 });
+    po.onTouchEnd({ x: 0, y: 0 }, 0);
   }
 });
