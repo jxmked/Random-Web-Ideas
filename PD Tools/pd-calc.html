@@ -48,12 +48,12 @@
 <body>
 
     <div class="container">
-        <input type="text" id="amount" placeholder="Enter Amount" />
-        <input type="text" id="icf" placeholder="ICF" value="1" readonly />
+        <input type="text" id="amount" placeholder="Enter Amount" value="5000" />
+        <input type="text" id="icf" placeholder="ICF" value="1" />
 
         <select name="Months" id="months">
             <option value="3">3 Months - 12.5 Weeks</option>
-            <option value="6">6 Months - 25 Weeks</option>
+            <option value="6" selected="">6 Months - 25 Weeks</option>
             <option value="9">9 Months - 37.5 Weeks</option>
             <option value="12">12 Months - 50 Weeks</option>
         </select>
@@ -115,5 +115,8 @@
 
   amountInput.addEventListener("input", updateOutput);
   monthsInput.addEventListener("change", updateOutput);
+  
+  
+  window.addEventListener("DOMContentLoaded", updateOutput);
 </script>
 </html>
