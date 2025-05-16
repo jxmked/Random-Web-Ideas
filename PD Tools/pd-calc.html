@@ -1,130 +1,132 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="initial-scale=1, width=device-width">
-    <title>Loan Calculator</title>
-    <style type="text/css">
-        body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f4f4f4;
-            margin: 0;
-        }
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  <title>PD - Calc</title>
+  <style type="text/css">
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
 
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
 
-        input[type="text"], select {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
+    input[type="text"], select {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
 
-        input[type="text"]:focus, select:focus {
-            outline: none;
-            border-color: #007bff;
-        }
+    input[type="text"]:focus, select:focus {
+      outline: none;
+      border-color: #007bff;
+    }
 
-        #out {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin-top: 20px;
-        }
-    </style>
+    #out {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <input type="text" id="amount" placeholder="Enter Amount" value="5,000" />
-        <input type="text" id="icf" placeholder="ICF" value="1" />
+  <div class="container">
+    <input type="text" id="amount" placeholder="Enter Amount" value="5,000" />
+    <input type="text" id="icf" placeholder="ICF" value="1" />
 
-        <select name="Months" id="months">
-            <option value="3">3 Months - 12.5 Weeks</option>
-            <option value="6" selected="">6 Months - 25 Weeks</option>
-            <option value="9">9 Months - 37.5 Weeks</option>
-            <option value="12">12 Months - 50 Weeks</option>
-        </select>
+    <select name="Months" id="months">
+      <option value="3">3 Months - 12.5 Weeks</option>
+      <option value="6" selected="">6 Months - 25 Weeks</option>
+      <option value="9">9 Months - 37.5 Weeks</option>
+      <option value="12">12 Months - 50 Weeks</option>
+    </select>
 
-        <div id="out">₱0.00</div>
+    <div id="out">
+      ₱0.00
     </div>
+  </div>
 </body>
 <script type="text/javascript">
-    const amountInput = document.getElementById("amount");
-    const monthsInput = document.getElementById("months");
-    const outputDiv = document.getElementById("out");
-    const icfInput = document.getElementById("icf");
+  const amountInput = document.getElementById("amount");
+  const monthsInput = document.getElementById("months");
+  const outputDiv = document.getElementById("out");
+  const icfInput = document.getElementById("icf");
 
-    function formatNumber(num) {
-        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  }
+
+  function updateOutput() {
+    let amount = 0;
+    let weeks = 0;
+    let icf = 0;
+    let rate = 0;
+
+    // Format the amount input
+    amountInput.value = formatNumber(amountInput.value.replace(/,/g, ''));
+
+    switch (monthsInput.value) {
+      case "3":
+        weeks = 12.5;
+        rate = 0.075;
+        break;
+
+      case "6":
+        weeks = 25;
+        rate = 0.15;
+        break;
+
+      case "9":
+        weeks = 37.5;
+        rate = 0.225;
+        break;
+
+      case "12":
+        weeks = 50;
+        rate = 0.30;
+        break;
     }
 
-    function updateOutput() {
-        let amount = 0;
-        let weeks = 0;
-        let icf = 0;
-        let rate = 0;
-
-        // Format the amount input
-        amountInput.value = formatNumber(amountInput.value.replace(/,/g, ''));
-
-        switch (monthsInput.value) {
-            case "3":
-                weeks = 12.5;
-                rate = 0.075;
-                break;
-
-            case "6":
-                weeks = 25;
-                rate = 0.15;
-                break;
-
-            case "9":
-                weeks = 37.5;
-                rate = 0.225;
-                break;
-
-            case "12":
-                weeks = 50;
-                rate = 0.30;
-                break;
-        }
-
-        try {
-            amount = Number(amountInput.value.replace(/,/g, ''));
-            icf = Number(icfInput.value);
-        } catch(err) {
-            amount = 0;
-            icf = 0;
-        }
-
-        const principal = amount / weeks;
-        const interest = principal * rate;
-        const dc = principal * 0.05;
-        const sc = principal * 0.03;
-        const mafs = 30 + 10.5 + 1;
-        const pf = 5;
-
-        const total = principal + interest + dc + sc + mafs + pf + icf;
-        outputDiv.innerText = `₱${formatNumber(total.toFixed(2))}`;
+    try {
+      amount = Number(amountInput.value.replace(/,/g, ''));
+      icf = Number(icfInput.value);
+    } catch(err) {
+      amount = 0;
+      icf = 0;
     }
 
-    amountInput.addEventListener("input", updateOutput);
-    icfInput.addEventListener("input", updateOutput);
-    monthsInput.addEventListener("change", updateOutput);
+    const principal = amount / weeks;
+    const interest = principal * rate;
+    const dc = principal * 0.05;
+    const sc = principal * 0.03;
+    const mafs = 30 + 10.5 + 1;
+    const pf = 5;
 
-    window.addEventListener("DOMContentLoaded", updateOutput);
+    const total = principal + interest + dc + sc + mafs + pf + icf;
+    outputDiv.innerText = `₱${formatNumber(total.toFixed(2))}`;
+  }
+
+  amountInput.addEventListener("input", updateOutput);
+  icfInput.addEventListener("input", updateOutput);
+  monthsInput.addEventListener("change", updateOutput);
+
+  window.addEventListener("DOMContentLoaded", updateOutput);
 </script>
 </html>
