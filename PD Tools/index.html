@@ -107,7 +107,17 @@
     const solutionContainer = document.getElementById("solution-container");
 
     function formatNumber(num) {
-        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        const parts = num.toFixed(2).split('.');
+        if (parts[1] !== '00') {
+            return num.toFixed(2).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        } else {
+            return parts[0].toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        }
+    }
+
+    function formatCurrency(num) {
+        const formatted = formatNumber(num);
+        return formatted.endsWith(".00") ? formatted.slice(0, -3) : formatted;
     }
 
     function updateOutput() {
@@ -119,8 +129,6 @@
         const mafs11 = 10.5;
         const mafs20 = 1;
         const pf = 5;
-
-        amountInput.value = formatNumber(amountInput.value.replace(/,/g, ''));
 
         switch (monthsInput.value) {
             case "3":
@@ -151,6 +159,8 @@
             amount = 0;
             icf = 0;
         }
+        
+        amountInput.value = formatNumber(amount);
 
         const principal = amount / weeks;
         const interest = principal * rate;
@@ -159,57 +169,57 @@
         const totalMAFS = mafs5 + mafs11 + mafs20;
         const weeklyAmortization = principal + interest + icf + dc + sc + totalMAFS + pf;
 
-        totalAmountDiv.innerText = `₱${formatNumber(weeklyAmortization.toFixed(2))}`;
+        totalAmountDiv.innerText = `₱${formatCurrency(weeklyAmortization)}`;
 
         solutionContainer.innerHTML = `
             <div class="solution-item">
-                <span class="solution-label">Principal = ${formatNumber(amount.toFixed(2))} / ${weeks}</span>
-                <span>= ${formatNumber(principal.toFixed(2))}</span>
+                <span class="solution-label">Principal = ${formatCurrency(amount)} / ${weeks}</span>
+                <span>= ${formatCurrency(principal)}</span>
             </div>
             <div class="solution-item">
-                <span class="solution-label">Interest = ${formatNumber(amount.toFixed(2))} / ${weeks} × ${(rate * 100).toFixed(1)}%</span>
-                <span>= ${formatNumber(interest.toFixed(2))}</span>
+                <span class="solution-label">Interest = ${formatCurrency(amount)} / ${weeks} × ${formatNumber((rate * 100))}%</span>
+                <span>= ${formatCurrency(interest)}</span>
             </div>
             <div class="solution-item">
                 <span class="solution-label">ICF</span>
-                <span>= ${formatNumber(icf.toFixed(2))}</span>
+                <span>= ${formatCurrency(icf)}</span>
             </div>
             <div class="solution-item">
-                <span class="solution-label">DC = ${formatNumber(amount.toFixed(2))} / ${weeks} × 5%</span>
-                <span>= ${formatNumber(dc.toFixed(2))}</span>
+                <span class="solution-label">DC = ${formatCurrency(amount)} / ${weeks} × 5%</span>
+                <span>= ${formatCurrency(dc)}</span>
             </div>
             <div class="solution-item">
-                <span class="solution-label">SC = ${formatNumber(amount.toFixed(2))} / ${weeks} × 3%</span>
-                <span>= ${formatNumber(sc.toFixed(2))}</span>
+                <span class="solution-label">SC = ${formatCurrency(amount)} / ${weeks} × 3%</span>
+                <span>= ${formatCurrency(sc)}</span>
             </div>
             <div class="solution-item">
                 <span class="solution-label">MAF 5</span>
-                <span>= ${formatNumber(mafs5.toFixed(2))}</span>
+                <span>= ${formatCurrency(mafs5)}</span>
             </div>
             <div class="solution-item">
                 <span class="solution-label">MAF 11</span>
-                <span>= ${formatNumber(mafs11.toFixed(2))}</span>
+                <span>= ${formatCurrency(mafs11)}</span>
             </div>
             <div class="solution-item">
                 <span class="solution-label">MAF 20</span>
-                <span>= ${formatNumber(mafs20.toFixed(2))}</span>
+                <span>= ${formatCurrency(mafs20)}</span>
             </div>
             <div class="solution-item">
                 <span class="solution-label">PF</span>
-                <span>= ${formatNumber(pf.toFixed(2))}</span>
+                <span>= ${formatCurrency(pf)}</span>
             </div>
             <hr>
             <div class="solution-item final-amount">
                 <span class="solution-label">Weekly Amortization</span>
-                <span>= ₱${formatNumber(weeklyAmortization.toFixed(2))}</span>
+                <span>₱${formatCurrency(weeklyAmortization)}</span>
             </div>
         `;
     }
 
-    amountInput.addEventListener("input", updateOutput);
-    icfInput.addEventListener("input", updateOutput);
-    monthsInput.addEventListener("change", updateOutput);
+    amountInput.addEventListener('input', updateOutput);
+    monthsInput.addEventListener('change', updateOutput);
+    icfInput.addEventListener('input', updateOutput);
 
-    window.addEventListener("DOMContentLoaded", updateOutput);
+    updateOutput(); // Call on initial load
 </script>
 </html>
