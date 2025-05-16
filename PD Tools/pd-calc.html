@@ -2,11 +2,13 @@
 <html>
 <head>
   <meta name="viewport" content="initial-scale=1, width=device-width">
-  <title>PD - Calc</title>
+  <title>Loan Calculator</title>
   <style type="text/css">
     body {
       font-family: sans-serif;
       display: flex;
+      flex-direction: column;
+      /* Arrange items vertically */
       justify-content: center;
       align-items: center;
       min-height: 100vh;
@@ -20,6 +22,8 @@
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       text-align: center;
+      margin-bottom: 20px;
+      /* Add some space below the calculator */
     }
 
     input[type="text"], select {
@@ -37,11 +41,31 @@
       border-color: #007bff;
     }
 
-    #out {
+    #output-container {
+      background-color: #e9ecef;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 600px;
+      text-align: left;
+    }
+
+    #total-amount {
       font-size: 24px;
       font-weight: bold;
       color: #333;
-      margin-top: 20px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .solution {
+      margin-bottom: 12px;
+    }
+
+    .label {
+      font-weight: bold;
+      margin-right: 5px;
     }
   </style>
 </head>
@@ -57,17 +81,22 @@
       <option value="9">9 Months - 37.5 Weeks</option>
       <option value="12">12 Months - 50 Weeks</option>
     </select>
+  </div>
 
-    <div id="out">
+  <div id="output-container">
+    <div id="total-amount">
       ₱0.00
     </div>
+    <div id="solution-container"></div>
   </div>
+
 </body>
 <script type="text/javascript">
   const amountInput = document.getElementById("amount");
   const monthsInput = document.getElementById("months");
-  const outputDiv = document.getElementById("out");
+  const totalAmountDiv = document.getElementById("total-amount");
   const icfInput = document.getElementById("icf");
+  const solutionContainer = document.getElementById("solution-container");
 
   function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -79,7 +108,6 @@
     let icf = 0;
     let rate = 0;
 
-    // Format the amount input
     amountInput.value = formatNumber(amountInput.value.replace(/,/g, ''));
 
     switch (monthsInput.value) {
@@ -112,15 +140,30 @@
       icf = 0;
     }
 
-    const principal = amount / weeks;
-    const interest = principal * rate;
-    const dc = principal * 0.05;
-    const sc = principal * 0.03;
-    const mafs = 30 + 10.5 + 1;
+    const principalWeekly = amount / weeks;
+    const interest = principalWeekly * rate;
+    const dc = principalWeekly * 0.05;
+    const sc = principalWeekly * 0.03;
+    const mafs = 41.5;
     const pf = 5;
+    const total = principalWeekly + interest + dc + sc + mafs + pf + icf;
 
-    const total = principal + interest + dc + sc + mafs + pf + icf;
-    outputDiv.innerText = `₱${formatNumber(total.toFixed(2))}`;
+    totalAmountDiv.innerText = `₱${formatNumber(total.toFixed(2))}`;
+
+    // Output the solution
+    solutionContainer.innerHTML = `
+    <p class="solution"><span class="label">Amount:</span> ₱${formatNumber(amount.toFixed(2))}</p>
+    <p class="solution"><span class="label">Weeks:</span> ${weeks}</p>
+    <p class="solution"><span class="label">Principal per Week:</span> ₱${formatNumber(principalWeekly.toFixed(2))}</p>
+    <p class="solution"><span class="label">Interest (${(rate * 100).toFixed(1)}%):</span> ₱${formatNumber(interest.toFixed(2))}</p>
+    <p class="solution"><span class="label">DC (5%):</span> ₱${formatNumber(dc.toFixed(2))}</p>
+    <p class="solution"><span class="label">SC (3%):</span> ₱${formatNumber(sc.toFixed(2))}</p>
+    <p class="solution"><span class="label">MAFS:</span> ₱${mafs.toFixed(2)}</p>
+    <p class="solution"><span class="label">PF:</span> ₱${pf.toFixed(2)}</p>
+    <p class="solution"><span class="label">ICF:</span> ₱${formatNumber(icf.toFixed(2))}</p>
+    <hr>
+    <p class="solution"><span class="label">Total Amount:</span> ₱${formatNumber(total.toFixed(2))}</p>
+    `;
   }
 
   amountInput.addEventListener("input", updateOutput);
