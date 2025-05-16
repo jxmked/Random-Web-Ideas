@@ -1,175 +1,215 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="initial-scale=1, width=device-width">
-  <title>Loan Calculator</title>
-  <style type="text/css">
-    body {
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      /* Arrange items vertically */
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #f4f4f4;
-      margin: 0;
-    }
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <title>Loan Calculator</title>
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column; /* Arrange items vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
 
-    .container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      margin-bottom: 20px;
-      /* Add some space below the calculator */
-    }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px; /* Add some space below the calculator */
+        }
 
-    input[type="text"], select {
-      width: calc(100% - 20px);
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
+        input[type="text"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
 
-    input[type="text"]:focus, select:focus {
-      outline: none;
-      border-color: #007bff;
-    }
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
 
-    #output-container {
-      background-color: #e9ecef;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      width: 80%;
-      max-width: 600px;
-      text-align: left;
-    }
+        #output-container {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: left;
+        }
 
-    #total-amount {
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 10px;
-      text-align: center;
-    }
+        #total-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
 
-    .solution {
-      margin-bottom: 12px;
-    }
+        .solution-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
 
-    .label {
-      font-weight: bold;
-      margin-right: 5px;
-    }
-  </style>
+        .solution-label {
+            font-weight: bold;
+        }
+
+        hr {
+            border-top: 1px solid #ccc;
+            margin: 10px 0;
+        }
+
+        .final-amount {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <input type="text" id="amount" placeholder="Enter Amount" value="5,000" />
-    <input type="text" id="icf" placeholder="ICF" value="1" />
+    <div class="container">
+        <input type="text" id="amount" placeholder="Enter Amount" value="5,000" />
+        <input type="text" id="icf" placeholder="ICF" value="1" />
 
-    <select name="Months" id="months">
-      <option value="3">3 Months - 12.5 Weeks</option>
-      <option value="6" selected="">6 Months - 25 Weeks</option>
-      <option value="9">9 Months - 37.5 Weeks</option>
-      <option value="12">12 Months - 50 Weeks</option>
-    </select>
-  </div>
-
-  <div id="output-container">
-    <div id="total-amount">
-      ₱0.00
+        <select name="Months" id="months">
+            <option value="3">3 Months - 12.5 Weeks</option>
+            <option value="6" selected="">6 Months - 25 Weeks</option>
+            <option value="9">9 Months - 37.5 Weeks</option>
+            <option value="12">12 Months - 50 Weeks</option>
+        </select>
     </div>
-    <div id="solution-container"></div>
-  </div>
+
+    <div id="output-container">
+        <div id="total-amount">₱0.00</div>
+        <div id="solution-container"></div>
+    </div>
 
 </body>
 <script type="text/javascript">
-  const amountInput = document.getElementById("amount");
-  const monthsInput = document.getElementById("months");
-  const totalAmountDiv = document.getElementById("total-amount");
-  const icfInput = document.getElementById("icf");
-  const solutionContainer = document.getElementById("solution-container");
+    const amountInput = document.getElementById("amount");
+    const monthsInput = document.getElementById("months");
+    const totalAmountDiv = document.getElementById("total-amount");
+    const icfInput = document.getElementById("icf");
+    const solutionContainer = document.getElementById("solution-container");
 
-  function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-  }
-
-  function updateOutput() {
-    let amount = 0;
-    let weeks = 0;
-    let icf = 0;
-    let rate = 0;
-
-    amountInput.value = formatNumber(amountInput.value.replace(/,/g, ''));
-
-    switch (monthsInput.value) {
-      case "3":
-        weeks = 12.5;
-        rate = 0.075;
-        break;
-
-      case "6":
-        weeks = 25;
-        rate = 0.15;
-        break;
-
-      case "9":
-        weeks = 37.5;
-        rate = 0.225;
-        break;
-
-      case "12":
-        weeks = 50;
-        rate = 0.30;
-        break;
+    function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
 
-    try {
-      amount = Number(amountInput.value.replace(/,/g, ''));
-      icf = Number(icfInput.value);
-    } catch(err) {
-      amount = 0;
-      icf = 0;
+    function updateOutput() {
+        let amount = 0;
+        let weeks = 0;
+        let icf = 0;
+        let rate = 0;
+        const mafs5 = 30;
+        const mafs11 = 10.5;
+        const mafs20 = 1;
+        const pf = 5;
+
+        amountInput.value = formatNumber(amountInput.value.replace(/,/g, ''));
+
+        switch (monthsInput.value) {
+            case "3":
+                weeks = 12.5;
+                rate = 0.075;
+                break;
+
+            case "6":
+                weeks = 25;
+                rate = 0.15;
+                break;
+
+            case "9":
+                weeks = 37.5;
+                rate = 0.225;
+                break;
+
+            case "12":
+                weeks = 50;
+                rate = 0.30;
+                break;
+        }
+
+        try {
+            amount = Number(amountInput.value.replace(/,/g, ''));
+            icf = Number(icfInput.value);
+        } catch(err) {
+            amount = 0;
+            icf = 0;
+        }
+
+        const principal = amount / weeks;
+        const interest = principal * rate;
+        const dc = principal * 0.05;
+        const sc = principal * 0.03;
+        const totalMAFS = mafs5 + mafs11 + mafs20;
+        const weeklyAmortization = principal + interest + icf + dc + sc + totalMAFS + pf;
+
+        totalAmountDiv.innerText = `₱${formatNumber(weeklyAmortization.toFixed(2))}`;
+
+        solutionContainer.innerHTML = `
+            <div class="solution-item">
+                <span class="solution-label">Principal = ${formatNumber(amount.toFixed(2))} / ${weeks}</span>
+                <span>= ${formatNumber(principal.toFixed(2))}</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-label">Interest = ${formatNumber(amount.toFixed(2))} / ${weeks} × ${(rate * 100).toFixed(1)}%</span>
+                <span>= ${formatNumber(interest.toFixed(2))}</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-label">ICF</span>
+                <span>= ${formatNumber(icf.toFixed(2))}</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-label">DC = ${formatNumber(amount.toFixed(2))} / ${weeks} × 5%</span>
+                <span>= ${formatNumber(dc.toFixed(2))}</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-label">SC = ${formatNumber(amount.toFixed(2))} / ${weeks} × 3%</span>
+                <span>= ${formatNumber(sc.toFixed(2))}</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-label">MAF 5</span>
+                <span>= ${formatNumber(mafs5.toFixed(2))}</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-label">MAF 11</span>
+                <span>= ${formatNumber(mafs11.toFixed(2))}</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-label">MAF 20</span>
+                <span>= ${formatNumber(mafs20.toFixed(2))}</span>
+            </div>
+            <div class="solution-item">
+                <span class="solution-label">PF</span>
+                <span>= ${formatNumber(pf.toFixed(2))}</span>
+            </div>
+            <hr>
+            <div class="solution-item final-amount">
+                <span class="solution-label">Weekly Amortization</span>
+                <span>= ₱${formatNumber(weeklyAmortization.toFixed(2))}</span>
+            </div>
+        `;
     }
 
-    const principalWeekly = amount / weeks;
-    const interest = principalWeekly * rate;
-    const dc = principalWeekly * 0.05;
-    const sc = principalWeekly * 0.03;
-    const mafs = 41.5;
-    const pf = 5;
-    const total = principalWeekly + interest + dc + sc + mafs + pf + icf;
+    amountInput.addEventListener("input", updateOutput);
+    icfInput.addEventListener("input", updateOutput);
+    monthsInput.addEventListener("change", updateOutput);
 
-    totalAmountDiv.innerText = `₱${formatNumber(total.toFixed(2))}`;
-
-    // Output the solution
-    solutionContainer.innerHTML = `
-    <p class="solution"><span class="label">Amount:</span> ₱${formatNumber(amount.toFixed(2))}</p>
-    <p class="solution"><span class="label">Weeks:</span> ${weeks}</p>
-    <p class="solution"><span class="label">Principal per Week:</span> ₱${formatNumber(principalWeekly.toFixed(2))}</p>
-    <p class="solution"><span class="label">Interest (${(rate * 100).toFixed(1)}%):</span> ₱${formatNumber(interest.toFixed(2))}</p>
-    <p class="solution"><span class="label">DC (5%):</span> ₱${formatNumber(dc.toFixed(2))}</p>
-    <p class="solution"><span class="label">SC (3%):</span> ₱${formatNumber(sc.toFixed(2))}</p>
-    <p class="solution"><span class="label">MAFS:</span> ₱${mafs.toFixed(2)}</p>
-    <p class="solution"><span class="label">PF:</span> ₱${pf.toFixed(2)}</p>
-    <p class="solution"><span class="label">ICF:</span> ₱${formatNumber(icf.toFixed(2))}</p>
-    <hr>
-    <p class="solution"><span class="label">Total Amount:</span> ₱${formatNumber(total.toFixed(2))}</p>
-    `;
-  }
-
-  amountInput.addEventListener("input", updateOutput);
-  icfInput.addEventListener("input", updateOutput);
-  monthsInput.addEventListener("change", updateOutput);
-
-  window.addEventListener("DOMContentLoaded", updateOutput);
+    window.addEventListener("DOMContentLoaded", updateOutput);
 </script>
 </html>
