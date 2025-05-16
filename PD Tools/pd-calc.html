@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-<meta name="viewport" content="initial-scale=1, width=device-width">
 <head>
-<title></title>
-<style type="text/css">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <title>Loan Calculator</title>
+    <style type="text/css">
         body {
             font-family: sans-serif;
             display: flex;
@@ -48,7 +48,7 @@
 <body>
 
     <div class="container">
-        <input type="text" id="amount" placeholder="Enter Amount" value="5000" />
+        <input type="text" id="amount" placeholder="Enter Amount" value="5,000" />
         <input type="text" id="icf" placeholder="ICF" value="1" />
 
         <select name="Months" id="months">
@@ -58,65 +58,73 @@
             <option value="12">12 Months - 50 Weeks</option>
         </select>
 
-        <div id="out">0.00</div>
+        <div id="out">₱0.00</div>
     </div>
 </body>
 <script type="text/javascript">
-  const amountInput = document.getElementById("amount");
-  const monthsInput = document.getElementById("months");
-  const outputDiv = document.getElementById("out");
-  const icfInput = document.getElementById("icf");
+    const amountInput = document.getElementById("amount");
+    const monthsInput = document.getElementById("months");
+    const outputDiv = document.getElementById("out");
+    const icfInput = document.getElementById("icf");
 
-  function updateOutput() {
-    let amount = 0;
-    let weeks = 0;
-    let icf = 0;
-    let rate = 0;
-
-    switch (monthsInput.value) {
-      case "3":
-        weeks = 12.5;
-        rate = 0.075;
-        break;
-
-      case "6":
-        weeks = 25;
-        rate = 0.15;
-        break;
-
-      case "9":
-        weeks = 37.5;
-        rate = 0.225;
-        break;
-
-      case "12":
-        weeks = 50;
-        rate = 0.30;
-        break;
+    function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
 
-    try {
-      amount = Number(amountInput.value);
-      icf = Number(icfInput.value);
-    } catch(err) {
-      amount = 0;
-      icf = 0;
+    function updateOutput() {
+        let amount = 0;
+        let weeks = 0;
+        let icf = 0;
+        let rate = 0;
+
+        // Format the amount input
+        amountInput.value = formatNumber(amountInput.value.replace(/,/g, ''));
+
+        switch (monthsInput.value) {
+            case "3":
+                weeks = 12.5;
+                rate = 0.075;
+                break;
+
+            case "6":
+                weeks = 25;
+                rate = 0.15;
+                break;
+
+            case "9":
+                weeks = 37.5;
+                rate = 0.225;
+                break;
+
+            case "12":
+                weeks = 50;
+                rate = 0.30;
+                break;
+        }
+
+        try {
+            amount = Number(amountInput.value.replace(/,/g, ''));
+            icf = Number(icfInput.value);
+        } catch(err) {
+            amount = 0;
+            icf = 0;
+        }
+
+        const principal = amount / weeks;
+        const interest = principal * rate;
+        const dc = principal * 0.05;
+        const sc = principal * 0.03;
+        const mafs = 30 + 10.5 + 1;
+        const pf = 5;
+
+        const total = principal + interest + dc + sc + mafs + pf + icf;
+        outputDiv.innerText = `₱${formatNumber(total.toFixed(2))}`;
     }
 
-    const principal = amount / weeks;
-    const interest = principal * rate;
-    const dc = principal * 0.05;
-    const sc = principal * 0.03;
-    const mafs = 30 + 10.5 + 1;
-    const pf = 5;
+    amountInput.addEventListener("input", updateOutput);
+    icfInput.addEventListener("input", updateOutput);
+    monthsInput.addEventListener("change", updateOutput);
 
-    outputDiv.innerText = (principal + interest + dc + sc + mafs + pf + icf).toFixed(2);
-  }
-
-  amountInput.addEventListener("input", updateOutput);
-  monthsInput.addEventListener("change", updateOutput);
-  
-  
-  window.addEventListener("DOMContentLoaded", updateOutput);
+    window.addEventListener("DOMContentLoaded", updateOutput);
 </script>
 </html>
