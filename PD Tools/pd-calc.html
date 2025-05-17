@@ -123,6 +123,9 @@
     const icfInput = document.getElementById("icf");
     const solutionContainer = document.getElementById("solution-container");
 
+    const max_rate = 30;
+    const max_weeks = 50;
+
     function formatNumber(num) {
         const parts = num.toFixed(2).split('.');
         if (parts[1] !== '00') {
@@ -139,35 +142,14 @@
 
     function updateOutput() {
         let amount = 0;
-        let weeks = 0;
         let icf = 0;
-        let rate = 0;
         const mafs5 = 30;
         const mafs11 = 10.5;
         const mafs20 = 1;
         const pf = 5;
 
-        switch (monthsInput.value) {
-            case "3":
-                weeks = 12.5;
-                rate = 0.075;
-                break;
-
-            case "6":
-                weeks = 25;
-                rate = 0.15;
-                break;
-
-            case "9":
-                weeks = 37.5;
-                rate = 0.225;
-                break;
-
-            case "12":
-                weeks = 50;
-                rate = 0.30;
-                break;
-        }
+        const weeks = (Number(monthsInput.value) / 12) * max_weeks;
+        const rate = ((Number(monthsInput.value) / 12) * max_rate) / 100;
 
         try {
             amount = Number(amountInput.value.replace(/,/g, ''));
