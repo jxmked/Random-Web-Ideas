@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="initial-scale=1, width=device-width">
     <title>Loan Calculator</title>
@@ -7,7 +8,7 @@
         body {
             font-family: sans-serif;
             display: flex;
-            flex-direction: column; /* Arrange items vertically */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -21,10 +22,11 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-bottom: 20px; /* Add some space below the calculator */
+            margin-bottom: 20px;
         }
 
-        input[type="text"], select {
+        input[type="text"],
+        select {
             width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 15px;
@@ -34,7 +36,8 @@
             font-size: 16px;
         }
 
-        input[type="text"]:focus, select:focus {
+        input[type="text"]:focus,
+        select:focus {
             outline: none;
             border-color: #007bff;
         }
@@ -49,7 +52,8 @@
             text-align: left;
         }
 
-        #total-amount {
+        #total-amount,
+        #total-amount-container {
             font-size: 24px;
             font-weight: bold;
             color: #333;
@@ -77,8 +81,21 @@
             font-size: 18px;
             text-align: right;
         }
+
+        .total-to-pay {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+        }
+
+        .difference-amount {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+        }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -94,7 +111,7 @@
     </div>
 
     <div id="output-container">
-        <div id="total-amount">₱0.00</div>
+        <div id="total-amount-container">&#8369;<span id="total-amount"></span></div>
         <div id="solution-container"></div>
     </div>
 
@@ -155,11 +172,11 @@
         try {
             amount = Number(amountInput.value.replace(/,/g, ''));
             icf = Number(icfInput.value);
-        } catch(err) {
+        } catch (err) {
             amount = 0;
             icf = 0;
         }
-        
+
         amountInput.value = formatNumber(amount);
 
         const principal = amount / weeks;
@@ -169,7 +186,7 @@
         const totalMAFS = mafs5 + mafs11 + mafs20;
         const weeklyAmortization = principal + interest + icf + dc + sc + totalMAFS + pf;
 
-        totalAmountDiv.innerText = `₱${formatCurrency(weeklyAmortization)}`;
+        totalAmountDiv.innerText = `${formatCurrency(weeklyAmortization)}`;
 
         solutionContainer.innerHTML = `
             <div class="solution-item">
@@ -177,7 +194,7 @@
                 <span>= ${formatCurrency(principal)}</span>
             </div>
             <div class="solution-item">
-                <span class="solution-label">Interest = ${formatCurrency(amount)} / ${weeks} × ${formatNumber((rate * 100))}%</span>
+                <span class="solution-label">Interest = ${formatCurrency(amount)} / ${weeks} &#215; ${formatNumber((rate * 100))}%</span>
                 <span>= ${formatCurrency(interest)}</span>
             </div>
             <div class="solution-item">
@@ -185,11 +202,11 @@
                 <span>= ${formatCurrency(icf)}</span>
             </div>
             <div class="solution-item">
-                <span class="solution-label">DC = ${formatCurrency(amount)} / ${weeks} × 5%</span>
+                <span class="solution-label">DC = ${formatCurrency(amount)} / ${weeks} &#215; 5%</span>
                 <span>= ${formatCurrency(dc)}</span>
             </div>
             <div class="solution-item">
-                <span class="solution-label">SC = ${formatCurrency(amount)} / ${weeks} × 3%</span>
+                <span class="solution-label">SC = ${formatCurrency(amount)} / ${weeks} &#215; 3%</span>
                 <span>= ${formatCurrency(sc)}</span>
             </div>
             <div class="solution-item">
@@ -206,12 +223,20 @@
             </div>
             <div class="solution-item">
                 <span class="solution-label">PF</span>
-                <span>= ${formatCurrency(pf)}</span>
-            </div>
+               <span>= ${formatCurrency(pf)}</span>
+            </div> 
             <hr>
             <div class="solution-item final-amount">
                 <span class="solution-label">Weekly Amortization</span>
-                <span>₱${formatCurrency(weeklyAmortization)}</span>
+                <span>&#8369;${formatCurrency(weeklyAmortization)}</span>
+            </div>
+            <div class="solution-item total-to-pay">
+                <span class="solution-label">Total to pay</span>
+                <span>&#8369;${formatCurrency(weeklyAmortization * weeks)}</span>
+            </div>
+            <div class="solution-item difference-amount">
+                <span class="solution-label">Difference</span>
+                <span>&#8369;${formatCurrency((weeklyAmortization * weeks) - (amount * 0.95))}</span>
             </div>
         `;
     }
@@ -220,6 +245,7 @@
     monthsInput.addEventListener('change', updateOutput);
     icfInput.addEventListener('input', updateOutput);
 
-    updateOutput(); // Call on initial load
+    updateOutput();
 </script>
+
 </html>
