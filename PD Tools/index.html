@@ -93,6 +93,31 @@
             font-size: 18px;
             text-align: right;
         }
+
+        div.inclusion_panel_container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+            gap: 10px;
+            margin: 10px;
+        }
+
+        div.inclusion_panel_container>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        div.inclusion_panel_container>div>label {
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        div.inclusion_panel_container>div>input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -108,6 +133,33 @@
             <option value="9">9 Months - 37.5 Weeks</option>
             <option value="12">12 Months - 50 Weeks</option>
         </select>
+
+        <div class="inclusion_panel_container">
+            <div>
+                <label for="maf1">MAF 1</label>
+                <input type="checkbox" name="maf1" id="maf1" class="maf-item" value="0" />
+            </div>
+            <div>
+                <label for="maf5">MAF 5</label>
+                <input type="checkbox" name="maf5" id="maf5" class="maf-item" value="30.00" checked />
+            </div>
+            <div>
+                <label for="maf8">MAF 8</label>
+                <input type="checkbox" name="maf8" id="maf8" class="maf-item" value="22.50" />
+            </div>
+            <div>
+                <label for="maf11">MAF 11</label>
+                <input type="checkbox" name="maf11" id="maf11" class="maf-item" value="10.5" checked />
+            </div>
+            <div>
+                <label for="maf12">MAF 12</label>
+                <input type="checkbox" name="maf12" id="maf12" class="maf-item" value="31.50" />
+            </div>
+            <div>
+                <label for="maf20">MAF 20</label>
+                <input type="checkbox" name="maf20" id="maf20" class="maf-item" value="1.00" checked />
+            </div>
+        </div>
     </div>
 
     <div id="output-container">
@@ -122,6 +174,10 @@
     const totalAmountDiv = document.getElementById("total-amount");
     const icfInput = document.getElementById("icf");
     const solutionContainer = document.getElementById("solution-container");
+    const mafItems = document.querySelectorAll('.maf-item');
+    const maf1 = document.getElementById("maf1");
+    const maf5 = document.getElementById("maf5");
+    const maf11 = document.getElementById("maf11");
 
     const max_rate = 30;
     const max_weeks = 50;
@@ -129,6 +185,32 @@
     const mafs11 = 10.5;
     const mafs20 = 1;
     const pf = 5;
+
+    const maf_names = {
+        maf1: "MAF 1",
+        maf5: "MAF 5",
+        maf8: "MAF 8",
+        maf11: "MAF 11",
+        maf12: "MAF 12",
+        maf20: "MAF 20"
+    };
+
+    const maf_1_rates = {
+        12.5: 0.015,
+        25: 0.030,
+        37.5: 0.0375,
+        50: 0.050
+    };
+
+    const current_values = {
+        rate: 0,
+        weeks: 0,
+        amount: 0,
+        icf: 0,
+        principal: 0,
+    }
+
+    let string_builder = "";
 
     function formatNumber(num) {
         const parts = num.toFixed(2).split('.');
@@ -144,7 +226,42 @@
         return formatted.endsWith(".00") ? formatted.slice(0, -3) : formatted;
     }
 
+    function calculate_maf_1() {
+        if (!maf1.checked) {
+            maf1.value = 0;
+            return false;
+        }
+
+        maf1.value = current_values.principal * (maf_1_rates[current_values.weeks]);
+
+        return true
+    }
+
+    function insert_mafs() {
+        mafItems.forEach(item => {
+            if (item.checked && item.value !== "0") {
+                const maf_name = maf_names[item.id];
+                const maf_value = parseFloat(item.value);
+
+                if (item.id === "maf1") {
+                    string_builder += `<div class="solution-item">
+                        <span class="solution-label">${maf_name} = ${formatCurrency(current_values.amount)} / ${current_values.weeks} &#215; ${formatNumber((maf_1_rates[current_values.weeks] * 100))}%</span>
+                        <span>= ${formatCurrency(maf_value)}</span>
+                    </div>`;
+                    return;
+                }
+
+                string_builder += `<div class="solution-item">
+                    <span class="solution-label">${maf_name}</span>
+                    <span>= ${formatCurrency(maf_value)}</span>
+                </div>`;
+            }
+        });
+    }
+
     function updateOutput() {
+        string_builder = "";
+
         let amount = 0;
         let icf = 0;
         const weeks = (Number(monthsInput.value) / 12) * max_weeks;
@@ -160,16 +277,23 @@
 
         amountInput.value = formatNumber(amount);
 
+        calculate_maf_1()
+
         const principal = amount / weeks;
         const interest = principal * rate;
         const dc = principal * 0.05;
         const sc = principal * 0.03;
-        const totalMAFS = mafs5 + mafs11 + mafs20;
-        const weeklyAmortization = principal + interest + icf + dc + sc + totalMAFS + pf;
 
-        totalAmountDiv.innerText = `${formatCurrency(weeklyAmortization)}`;
+        current_values.amount = amount;
+        current_values.weeks = weeks;
+        current_values.rate = rate;
+        current_values.icf = icf;
+        current_values.principal = principal;
 
-        solutionContainer.innerHTML = `
+        let weeklyAmortization = principal + interest + icf + dc + sc + pf;
+
+
+        string_builder += `
             <div class="solution-item">
                 <span class="solution-label">Principal = ${formatCurrency(amount)} / ${weeks}</span>
                 <span>= ${formatCurrency(principal)}</span>
@@ -189,24 +313,20 @@
             <div class="solution-item">
                 <span class="solution-label">SC = ${formatCurrency(amount)} / ${weeks} &#215; 3%</span>
                 <span>= ${formatCurrency(sc)}</span>
-            </div>
-            <div class="solution-item">
-                <span class="solution-label">MAF 5</span>
-                <span>= ${formatCurrency(mafs5)}</span>
-            </div>
-            <div class="solution-item">
-                <span class="solution-label">MAF 11</span>
-                <span>= ${formatCurrency(mafs11)}</span>
-            </div>
-            <div class="solution-item">
-                <span class="solution-label">MAF 20</span>
-                <span>= ${formatCurrency(mafs20)}</span>
-            </div>
-            <div class="solution-item">
-                <span class="solution-label">PF</span>
-               <span>= ${formatCurrency(pf)}</span>
-            </div> 
-            <hr>
+            </div>`;
+
+        insert_mafs();
+
+        mafItems.forEach(item => {
+            if (item.checked && item.value !== "0") {
+                const maf_value = parseFloat(item.value);
+                weeklyAmortization += maf_value;
+            }
+        });
+
+
+        string_builder += `
+         <hr>
             <div class="solution-item final-amount">
                 <span class="solution-label">Weekly Amortization</span>
                 <span>&#8369;${formatCurrency(weeklyAmortization)}</span>
@@ -217,14 +337,43 @@
             </div>
             <div class="solution-item difference-amount">
                 <span class="solution-label">Difference</span>
-                <span>&#8369;${formatCurrency((weeklyAmortization * weeks) - (amount * 0.95))}</span>
+                <span>&#8369;${formatCurrency((weeklyAmortization * weeks) - amount)}</span>
             </div>
-        `;
+            <div class="solution-item difference-amount">
+                <span class="solution-label">5% = &#8369;${formatCurrency(amount * 0.05)} : 95% = &#8369;${formatCurrency(amount * 0.95)}</span>
+                <span></span>
+            </div>
+        `
+
+        solutionContainer.innerHTML = string_builder;
+
+        totalAmountDiv.innerText = `${formatCurrency(weeklyAmortization)}`;
     }
 
     amountInput.addEventListener('input', updateOutput);
     monthsInput.addEventListener('change', updateOutput);
     icfInput.addEventListener('input', updateOutput);
+
+
+    maf1.addEventListener('change', () => {
+        if (maf1.checked) {
+            maf5.checked = false;
+            maf11.checked = false;
+        } else {
+            maf5.checked = true;
+            maf11.checked = true;
+        }
+    });
+
+    maf5.addEventListener('change', () => {
+        maf1.checked = false;
+    });
+    maf11.addEventListener('change', () => {
+        maf1.checked = false;
+    });
+
+
+    mafItems.forEach(item => item.addEventListener('change', updateOutput));
 
     updateOutput();
 </script>
