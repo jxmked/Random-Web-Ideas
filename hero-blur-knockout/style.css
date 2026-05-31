@@ -1,0 +1,32 @@
+
+.backdrop {
+  width: 500px;
+    height: 250px;
+    position: absolute;
+    background-image: url("http://static.minitokyo.net/downloads/43/45/744793.jpg");
+    background-size: 100% 100%;
+}
+.blr {
+  width: 400px;
+  height: 150px;
+  position: absolute;
+  backdrop-filter: blur(10px);
+  top: 70px;
+  left: 45px;
+}
+.text {
+  width: 400px;
+  height: 110px;
+  position: absolute;
+  top: 70px;
+  left: 45px;
+  padding-top: 40px;
+  background-image: url("https://picsum.photos/200/300");
+  background-size: 500px 250px;
+  background-position:-45px -70px;
+  font: bolder 12vw 'Alfa Slab One';
+  text-align: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: rgba(0, 0, 0, 0.1);
+}
